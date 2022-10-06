@@ -1,4 +1,15 @@
-Fake86: A portable, open-source 8086 PC emulator.
+# Fake86: A portable, open-source 8086 PC emulator.
+
+## Disclaimer
+
+This project is very, very old and it's long been abandoned.
+
+Please start using the successor to Fake86, called XTulator.
+
+https://github.com/mikechambers84/XTulator
+
+## Original copyright notice
+
 Copyright (C)2010-2013 Mike Chambers
 
 This program is free software; you can redistribute it and/or
@@ -15,14 +26,15 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-===============================================================================
+---
 
 The full terms of the GNU General Public License version 2, under which this
 software is release, are contained in the text file LICENSE
 
-===============================================================================
+---
 
-** IMPORTANT **
+## Important
+
 Remember that Fake86 requires command line parameters to work. If you are just
 launching it by double-clicking on the .exe in Windows Explorer, it won't work.
 
