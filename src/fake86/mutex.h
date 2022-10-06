@@ -18,12 +18,12 @@
 */
 
 #ifdef _WIN32
-    #include <Windows.h>
-    #include <process.h>
-    #define MutexLock(mutex) EnterCriticalSection(&mutex)
-    #define MutexUnlock(mutex) LeaveCriticalSection(&mutex)
+#include <Windows.h>
+#include <process.h>
+#define MutexLock(mutex) EnterCriticalSection(&mutex)
+#define MutexUnlock(mutex) LeaveCriticalSection(&mutex)
 #else
-    #include <pthread.h>
-    #define MutexLock(mutex) pthread_mutex_lock(&mutex)
-    #define MutexUnlock(mutex) pthread_mutex_unlock(&mutex)
+#include <pthread.h>
+#define MutexLock(mutex) pthread_mutex_lock(&mutex)
+#define MutexUnlock(mutex) pthread_mutex_unlock(&mutex)
 #endif

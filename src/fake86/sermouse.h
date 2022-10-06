@@ -19,8 +19,9 @@
 
 #include <stdint.h>
 
-struct sermouse_s {
-	uint8_t reg[8];
-	uint8_t buf[16];
-	int8_t bufptr;
+struct sermouse_s
+{
+  uint8_t reg[8];
+  uint8_t buf[16];
+  int8_t bufptr;
 };

@@ -17,15 +17,16 @@
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-struct structpic {
-	uint8_t imr; //mask register
-	uint8_t irr; //request register
-	uint8_t isr; //service register
-	uint8_t icwstep; //used during initialization to keep track of which ICW we're at
-	uint8_t icw[5];
-	uint8_t intoffset; //interrupt vector offset
-	uint8_t priority; //which IRQ has highest priority
-	uint8_t autoeoi; //automatic EOI mode
-	uint8_t readmode; //remember what to return on read register from OCW3
-	uint8_t enabled;
+struct structpic
+{
+  uint8_t imr;     // mask register
+  uint8_t irr;     // request register
+  uint8_t isr;     // service register
+  uint8_t icwstep; // used during initialization to keep track of which ICW we're at
+  uint8_t icw[5];
+  uint8_t intoffset; // interrupt vector offset
+  uint8_t priority;  // which IRQ has highest priority
+  uint8_t autoeoi;   // automatic EOI mode
+  uint8_t readmode;  // remember what to return on read register from OCW3
+  uint8_t enabled;
 };

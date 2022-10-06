@@ -19,30 +19,32 @@
 
 #include <stdint.h>
 
-struct blaster_s {
-	uint8_t mem[1024];
-	uint16_t memptr;
-	uint16_t samplerate;
-	uint8_t dspmaj;
-	uint8_t dspmin;
-	uint8_t speakerstate;
-	uint8_t lastresetval;
-	uint8_t lastcmdval;
-	uint8_t lasttestval;
-	uint8_t waitforarg;
-	uint8_t paused8;
-	uint8_t paused16;
-	uint8_t sample;
-	uint8_t sbirq;
-	uint8_t sbdma;
-	uint8_t usingdma;
-	uint8_t maskdma;
-	uint8_t useautoinit;
-	uint32_t blocksize;
-	uint32_t blockstep;
-	uint64_t sampleticks;
-	struct mixer_s {
-		uint8_t index;
-		uint8_t reg[256];
-	} mixer;
+struct blaster_s
+{
+  uint8_t mem[1024];
+  uint16_t memptr;
+  uint16_t samplerate;
+  uint8_t dspmaj;
+  uint8_t dspmin;
+  uint8_t speakerstate;
+  uint8_t lastresetval;
+  uint8_t lastcmdval;
+  uint8_t lasttestval;
+  uint8_t waitforarg;
+  uint8_t paused8;
+  uint8_t paused16;
+  uint8_t sample;
+  uint8_t sbirq;
+  uint8_t sbdma;
+  uint8_t usingdma;
+  uint8_t maskdma;
+  uint8_t useautoinit;
+  uint32_t blocksize;
+  uint32_t blockstep;
+  uint64_t sampleticks;
+  struct mixer_s
+  {
+    uint8_t index;
+    uint8_t reg[256];
+  } mixer;
 };

@@ -20,12 +20,13 @@
 #include <stdint.h>
 #include <stdio.h>
 
-struct struct_drive {
-	FILE *diskfile;
-	uint32_t filesize;
-	uint16_t cyls;
-	uint16_t sects;
-	uint16_t heads;
-	uint8_t inserted;
-	char *filename;
+struct struct_drive
+{
+  FILE* diskfile;
+  uint32_t filesize;
+  uint16_t cyls;
+  uint16_t sects;
+  uint16_t heads;
+  uint8_t inserted;
+  char* filename;
 };
