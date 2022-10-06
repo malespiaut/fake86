@@ -57,7 +57,7 @@ extern uint32_t makeupticks;
 void
 out8259(uint16_t portnum, uint8_t value)
 {
-  uint8_t i;
+  uint8_t i = 0;
   switch (portnum & 1)
     {
     case 0:
@@ -112,7 +112,7 @@ out8259(uint16_t portnum, uint8_t value)
 uint8_t
 nextintr()
 {
-  uint8_t i, tmpirr;
+  uint8_t i = 0, tmpirr = 0;
   tmpirr = i8259.irr & (~i8259.imr); // XOR request register with inverted mask register
   for (i = 0; i < 8; i++)
     {

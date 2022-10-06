@@ -302,7 +302,7 @@ handleinput()
 {
   SDL_Event event;
   int mx = 0, my = 0;
-  uint8_t tempbuttons;
+  uint8_t tempbuttons = 0;
   if (SDL_PollEvent(&event))
     {
       switch (event.type)

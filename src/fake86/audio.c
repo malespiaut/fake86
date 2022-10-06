@@ -104,7 +104,7 @@ audiobufferfilled()
 void
 tickaudio()
 {
-  int16_t sample;
+  int16_t sample = 0;
   if (audbufptr >= usebuffersize)
     {
       return;

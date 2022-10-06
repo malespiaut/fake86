@@ -34,7 +34,7 @@ int16_t speakerpos = 0;
 int16_t
 speakergensample()
 {
-  int16_t speakervalue;
+  int16_t speakervalue = 0;
 
   speakerfullstep = (uint64_t)((float)gensamplerate / (float)i8253.chanfreq[2]);
   if (speakerfullstep < 2)

@@ -67,7 +67,7 @@ uint32_t
 loadbinary(uint32_t addr32, uint8_t* filename, uint8_t roflag)
 {
   FILE* binfile = NULL;
-  uint32_t readsize;
+  uint32_t readsize = 0;
 
   binfile = fopen(filename, "rb");
   if (binfile == NULL)
@@ -88,7 +88,7 @@ loadbinary(uint32_t addr32, uint8_t* filename, uint8_t roflag)
 uint32_t
 loadrom(uint32_t addr32, uint8_t* filename, uint8_t failure_fatal)
 {
-  uint32_t readsize;
+  uint32_t readsize = 0;
   readsize = loadbinary(addr32, filename, 1);
   if (!readsize)
     {
@@ -114,7 +114,7 @@ uint32_t
 loadbios(uint8_t* filename)
 {
   FILE* binfile = NULL;
-  uint32_t readsize;
+  uint32_t readsize = 0;
 
   binfile = fopen(filename, "rb");
   if (binfile == NULL)
@@ -166,7 +166,7 @@ extern void dispatch();
 void
 printbinary(uint8_t value)
 {
-  int8_t curbit;
+  int8_t curbit = 0;
 
   for (curbit = 7; curbit >= 0; curbit--)
     {
@@ -289,7 +289,7 @@ extern void bufsermousedata(uint8_t value);
 int
 main(int argc, char* argv[])
 {
-  uint32_t biossize;
+  uint32_t biossize = 0;
 
   printf("%s (c)2010-2013 Mike Chambers\n", build);
   printf("[A portable, open-source 8086 PC emulator]\n\n");

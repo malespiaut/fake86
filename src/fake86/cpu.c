@@ -250,7 +250,7 @@ flag_adc8(uint8_t v1, uint8_t v2, uint8_t v3)
 {
 
   /* v1 = destination operand, v2 = source operand, v3 = carry flag */
-  uint16_t dst;
+  uint16_t dst = 0;
 
   dst = (uint16_t)v1 + (uint16_t)v2 + (uint16_t)v3;
   flag_szp8((uint8_t)dst);
@@ -286,7 +286,7 @@ void
 flag_adc16(uint16_t v1, uint16_t v2, uint16_t v3)
 {
 
-  uint32_t dst;
+  uint32_t dst = 0;
 
   dst = (uint32_t)v1 + (uint32_t)v2 + (uint32_t)v3;
   flag_szp16((uint16_t)dst);
@@ -322,7 +322,7 @@ void
 flag_add8(uint8_t v1, uint8_t v2)
 {
   /* v1 = destination operand, v2 = source operand */
-  uint16_t dst;
+  uint16_t dst = 0;
 
   dst = (uint16_t)v1 + (uint16_t)v2;
   flag_szp8((uint8_t)dst);
@@ -358,7 +358,7 @@ void
 flag_add16(uint16_t v1, uint16_t v2)
 {
   /* v1 = destination operand, v2 = source operand */
-  uint32_t dst;
+  uint32_t dst = 0;
 
   dst = (uint32_t)v1 + (uint32_t)v2;
   flag_szp16((uint16_t)dst);
@@ -395,7 +395,7 @@ flag_sbb8(uint8_t v1, uint8_t v2, uint8_t v3)
 {
 
   /* v1 = destination operand, v2 = source operand, v3 = carry flag */
-  uint16_t dst;
+  uint16_t dst = 0;
 
   v2 += v3;
   dst = (uint16_t)v1 - (uint16_t)v2;
@@ -433,7 +433,7 @@ flag_sbb16(uint16_t v1, uint16_t v2, uint16_t v3)
 {
 
   /* v1 = destination operand, v2 = source operand, v3 = carry flag */
-  uint32_t dst;
+  uint32_t dst = 0;
 
   v2 += v3;
   dst = (uint32_t)v1 - (uint32_t)v2;
@@ -471,7 +471,7 @@ flag_sub8(uint8_t v1, uint8_t v2)
 {
 
   /* v1 = destination operand, v2 = source operand */
-  uint16_t dst;
+  uint16_t dst = 0;
 
   dst = (uint16_t)v1 - (uint16_t)v2;
   flag_szp8((uint8_t)dst);
@@ -508,7 +508,7 @@ flag_sub16(uint16_t v1, uint16_t v2)
 {
 
   /* v1 = destination operand, v2 = source operand */
-  uint32_t dst;
+  uint32_t dst = 0;
 
   dst = (uint32_t)v1 - (uint32_t)v2;
   flag_szp16((uint16_t)dst);
@@ -641,7 +641,7 @@ op_sbb16()
 void
 getea(uint8_t rmval)
 {
-  uint32_t tempea;
+  uint32_t tempea = 0;
 
   tempea = 0;
   switch (mode)
@@ -722,7 +722,7 @@ uint16_t
 pop()
 {
 
-  uint16_t tempval;
+  uint16_t tempval = 0;
 
   tempval = getmem16(segregs[regss], regs.wordregs[regsp]);
   regs.wordregs[regsp] = regs.wordregs[regsp] + 2;
@@ -798,10 +798,10 @@ uint8_t
 op_grp2_8(uint8_t cnt)
 {
 
-  uint16_t s;
-  uint16_t shift;
-  uint16_t oldcf;
-  uint16_t msb;
+  uint16_t s = 0;
+  uint16_t shift = 0;
+  uint16_t oldcf = 0;
+  uint16_t msb = 0;
 
   s = oper1b;
 #ifdef CPU_LIMIT_SHIFT_COUNT
@@ -960,9 +960,9 @@ uint16_t
 op_grp2_16(uint8_t cnt)
 {
 
-  uint32_t s;
-  uint32_t shift;
-  uint32_t msb;
+  uint32_t s = 0;
+  uint32_t shift = 0;
+  uint32_t msb = 0;
 
   s = oper1;
 #ifdef CPU_LIMIT_SHIFT_COUNT
@@ -1128,11 +1128,11 @@ void
 op_idiv8(uint16_t valdiv, uint8_t divisor)
 {
 
-  uint16_t s1;
-  uint16_t s2;
-  uint16_t d1;
-  uint16_t d2;
-  int sign;
+  uint16_t s1 = 0;
+  uint16_t s2 = 0;
+  uint16_t d1 = 0;
+  uint16_t d2 = 0;
+  int sign = 0;
 
   if (divisor == 0)
     {
@@ -1276,11 +1276,11 @@ void
 op_idiv16(uint32_t valdiv, uint16_t divisor)
 {
 
-  uint32_t d1;
-  uint32_t d2;
-  uint32_t s1;
-  uint32_t s2;
-  int sign;
+  uint32_t d1 = 0;
+  uint32_t d2 = 0;
+  uint32_t s1 = 0;
+  uint32_t s2 = 0;
+  int sign = 0;
 
   if (divisor == 0)
     {
@@ -1465,7 +1465,7 @@ void
 intcall86(uint8_t intnum)
 {
   static uint16_t lastint10ax;
-  uint16_t oldregax;
+  uint16_t oldregax = 0;
   didintr = 1;
 
   if (intnum == 0x19)
@@ -1582,8 +1582,8 @@ void
 exec86(uint32_t execloops)
 {
 
-  uint32_t loopcount;
-  uint8_t docontinue;
+  uint32_t loopcount = 0;
+  uint8_t docontinue = 0;
   static uint16_t firstip;
   static uint16_t trap_toggle = 0;
 

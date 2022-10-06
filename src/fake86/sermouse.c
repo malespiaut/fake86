@@ -49,7 +49,7 @@ bufsermousedata(uint8_t value)
 void
 outsermouse(uint16_t portnum, uint8_t value)
 {
-  uint8_t oldreg;
+  uint8_t oldreg = 0;
   // printf("[DEBUG] Serial mouse, port %X out: %02X\n", portnum, value);
   portnum &= 7;
   oldreg = sermouse.reg[portnum];
@@ -74,7 +74,7 @@ outsermouse(uint16_t portnum, uint8_t value)
 uint8_t
 insermouse(uint16_t portnum)
 {
-  uint8_t temp;
+  uint8_t temp = 0;
   // printf("[DEBUG] Serial mouse, port %X in\n", portnum);
   portnum &= 7;
   switch (portnum)

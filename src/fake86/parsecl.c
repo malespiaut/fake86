@@ -47,8 +47,8 @@ extern uint32_t loadrom(uint32_t addr32, uint8_t* filename, uint8_t failure_fata
 uint32_t
 hextouint(char* src)
 {
-  uint32_t tempuint = 0, cc;
-  uint16_t i;
+  uint32_t tempuint = 0, cc = 0;
+  uint16_t i = 0;
 
   for (i = 0; i < strlen(src); i++)
     {
@@ -141,8 +141,8 @@ showhelp()
 void
 parsecl(int argc, char* argv[])
 {
-  uint32_t tempuint;
-  int i, abort = 0;
+  uint32_t tempuint = 0;
+  int i = 0, abort = 0;
 
   if (argc < 2)
     {

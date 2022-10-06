@@ -21,6 +21,7 @@
    it is a bit messy. i plan to rework much of this in the future. i am also
    going to add hardware accelerated scaling soon. */
 
+#include <math.h>
 #include <stdint.h>
 #include <stdio.h>
 
@@ -109,8 +110,8 @@ uint32_t nw, nh; // native width and height, pre-stretching (i.e. 320x200 for mo
 void
 createscalemap()
 {
-  uint32_t srcx, srcy, dstx, dsty, scalemapptr;
-  double xscale, yscale;
+  uint32_t srcx = 0, srcy = 0, dstx = 0, dsty = 0, scalemapptr = 0;
+  double xscale = NAN, yscale = NAN;
 
   xscale = (double)nw / (double)screen->w;
   yscale = (double)nh / (double)screen->h;
@@ -151,7 +152,7 @@ void*
 VideoThread(void* dummy)
 {
 #endif
-  uint32_t cursorprevtick, cursorcurtick, delaycalc;
+  uint32_t cursorprevtick = 0, cursorcurtick = 0, delaycalc = 0;
   cursorprevtick = SDL_GetTicks();
   cursorvisible = 0;
 
@@ -262,10 +263,10 @@ doscrmodechange()
 void
 stretchblit(SDL_Surface* target)
 {
-  uint32_t srcx, srcy, dstx, dsty, lastx, lasty, r, g, b;
-  uint32_t consecutivex, consecutivey = 0, limitx, limity, scalemapptr;
-  uint32_t ofs;
-  uint8_t* pixelrgb;
+  uint32_t srcx = 0, srcy = 0, dstx = 0, dsty = 0, lastx = 0, lasty = 0, r = 0, g = 0, b = 0;
+  uint32_t consecutivex = 0, consecutivey = 0, limitx = 0, limity = 0, scalemapptr = 0;
+  uint32_t ofs = 0;
+  uint8_t* pixelrgb = NULL;
 
   limitx = (uint32_t)((double)nw / (double)target->w);
   limity = (uint32_t)((double)nh / (double)target->h);
@@ -366,9 +367,9 @@ stretchblit(SDL_Surface* target)
 void
 roughblit(SDL_Surface* target)
 {
-  uint32_t srcx, srcy, dstx, dsty, scalemapptr;
-  int32_t ofs;
-  uint8_t* pixelrgb;
+  uint32_t srcx = 0, srcy = 0, dstx = 0, dsty = 0, scalemapptr = 0;
+  int32_t ofs = 0;
+  uint8_t* pixelrgb = NULL;
 
   if (SDL_MUSTLOCK(target))
     {
@@ -409,9 +410,9 @@ roughblit(SDL_Surface* target)
 void
 doubleblit(SDL_Surface* target)
 {
-  uint32_t srcx, srcy, dstx, dsty, curcolor;
+  uint32_t srcx = 0, srcy = 0, dstx = 0, dsty = 0, curcolor = 0;
   int32_t ofs = 0;
-  uint8_t* pixelrgb;
+  uint8_t* pixelrgb = NULL;
 
   if (SDL_MUSTLOCK(target))
     {
@@ -447,7 +448,7 @@ extern uint16_t vtotal;
 void
 draw()
 {
-  uint32_t planemode, color, chary, charx, vidptr, divx, divy, curchar, curpixel, usepal, intensity, blockw, curheight, x1, y1;
+  uint32_t planemode = 0, color = 0, chary = 0, charx = 0, vidptr = 0, divx = 0, divy = 0, curchar = 0, curpixel = 0, usepal = 0, intensity = 0, blockw = 0, curheight = 0, x1 = 0, y1 = 0;
   switch (vidmode)
     {
     case 0:

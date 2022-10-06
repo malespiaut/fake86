@@ -71,7 +71,7 @@ extern uint32_t nw, nh;
 void
 vidinterrupt()
 {
-  uint32_t tempcalc, memloc, n;
+  uint32_t tempcalc = 0, memloc = 0, n = 0;
   updatedscreen = 1;
   switch (regs.byteregs[regah])
     {       // what video interrupt function?
@@ -284,7 +284,7 @@ vidinterrupt()
 void
 initcga()
 {
-  FILE* fontfile;
+  FILE* fontfile = NULL;
   fontfile = fopen(PATH_DATAFILES "asciivga.dat", "rb");
   if (fontfile == NULL)
     {
@@ -752,8 +752,8 @@ uint8_t lastmode = 0, tempvalue;
 void
 writeVGA(uint32_t addr32, uint8_t value)
 {
-  uint32_t planesize;
-  uint8_t curval, tempand, cnt;
+  uint32_t planesize = 0;
+  uint8_t curval = 0, tempand = 0, cnt = 0;
   updatedscreen = 1;
   planesize = 0x10000;
   // if (lastmode != VGA_GC[5] & 3) printf("write mode %u\n", VGA_GC[5] & 3);
@@ -1019,7 +1019,7 @@ uint32_t readmap;
 uint8_t
 readVGA(uint32_t addr32)
 {
-  uint32_t planesize;
+  uint32_t planesize = 0;
   planesize = 0x10000;
 
   VGA_latch[0] = VRAM[addr32];

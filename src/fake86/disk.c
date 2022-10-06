@@ -103,7 +103,7 @@ ejectdisk(uint8_t drivenum)
 void
 readdisk(uint8_t drivenum, uint16_t dstseg, uint16_t dstoff, uint16_t cyl, uint16_t sect, uint16_t head, uint16_t sectcount)
 {
-  uint32_t memdest, lba, fileoffset, cursect, sectoffset;
+  uint32_t memdest = 0, lba = 0, fileoffset = 0, cursect = 0, sectoffset = 0;
   if (!sect || !disk[drivenum].inserted)
     {
       return;
@@ -138,7 +138,7 @@ readdisk(uint8_t drivenum, uint16_t dstseg, uint16_t dstoff, uint16_t cyl, uint1
 void
 writedisk(uint8_t drivenum, uint16_t dstseg, uint16_t dstoff, uint16_t cyl, uint16_t sect, uint16_t head, uint16_t sectcount)
 {
-  uint32_t memdest, lba, fileoffset, cursect, sectoffset;
+  uint32_t memdest = 0, lba = 0, fileoffset = 0, cursect = 0, sectoffset = 0;
   if (!sect || !disk[drivenum].inserted)
     {
       return;

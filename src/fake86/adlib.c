@@ -19,6 +19,7 @@
 
 /* adlib.c: very ugly Adlib OPL2 emulation for Fake86. very much a work in progress. :) */
 
+#include <math.h>
 #include <stdint.h>
 #include <stdio.h>
 
@@ -176,7 +177,7 @@ inadlib(uint16_t portnum)
 uint16_t
 adlibfreq(uint8_t chan)
 {
-  uint16_t tmpfreq;
+  uint16_t tmpfreq = 0;
   if (!adlibch[chan].keyon)
     {
       return (0);
@@ -217,8 +218,8 @@ extern SDL_AudioSpec wanted;
 int32_t
 adlibsample(uint8_t curchan)
 {
-  int32_t tempsample;
-  double tempstep;
+  int32_t tempsample = 0;
+  double tempstep = NAN;
 
   if (adlibpercussion && (curchan >= 6) && (curchan <= 8))
     {
@@ -246,8 +247,8 @@ adlibsample(uint8_t curchan)
 int16_t
 adlibgensample()
 {
-  uint8_t curchan;
-  int16_t adlibaccum;
+  uint8_t curchan = 0;
+  int16_t adlibaccum = 0;
   adlibaccum = 0;
   for (curchan = 0; curchan < 9; curchan++)
     {
@@ -262,7 +263,7 @@ adlibgensample()
 void
 tickadlib()
 {
-  uint8_t curchan;
+  uint8_t curchan = 0;
   for (curchan = 0; curchan < 9; curchan++)
     {
       if (adlibfreq(curchan) != 0)

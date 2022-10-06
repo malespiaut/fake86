@@ -41,7 +41,7 @@ extern uint8_t RAM[0x100000];
 uint8_t
 read8237(uint8_t channel)
 {
-  uint8_t ret;
+  uint8_t ret = 0;
   if (dmachan[channel].masked)
     {
       return (128);
@@ -71,7 +71,7 @@ read8237(uint8_t channel)
 void
 out8237(uint16_t addr, uint8_t value)
 {
-  uint8_t channel;
+  uint8_t channel = 0;
 #ifdef DEBUG_DMA
   printf("out8237(0x%X, %X);\n", addr, value);
 #endif

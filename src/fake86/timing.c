@@ -84,7 +84,7 @@ inittiming()
 void
 timing()
 {
-  uint8_t i8253chan;
+  uint8_t i8253chan = 0;
 
 #ifdef _WIN32
   QueryPerformanceCounter(&queryperf);

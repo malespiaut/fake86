@@ -104,7 +104,7 @@ portout16(uint16_t portnum, uint16_t value)
 uint16_t
 portin16(uint16_t portnum)
 {
-  uint16_t ret;
+  uint16_t ret = 0;
 
   do_callback_read16 = (uint16_t(*)(uint16_t portnum))port_read_callback16[portnum];
   if (do_callback_read16 != (void*)0)
@@ -120,7 +120,7 @@ portin16(uint16_t portnum)
 void
 set_port_write_redirector(uint16_t startport, uint16_t endport, void* callback)
 {
-  uint16_t i;
+  uint16_t i = 0;
   for (i = startport; i <= endport; i++)
     {
       port_write_callback[i] = callback;
@@ -130,7 +130,7 @@ set_port_write_redirector(uint16_t startport, uint16_t endport, void* callback)
 void
 set_port_read_redirector(uint16_t startport, uint16_t endport, void* callback)
 {
-  uint16_t i;
+  uint16_t i = 0;
   for (i = startport; i <= endport; i++)
     {
       port_read_callback[i] = callback;
@@ -140,7 +140,7 @@ set_port_read_redirector(uint16_t startport, uint16_t endport, void* callback)
 void
 set_port_write_redirector_16(uint16_t startport, uint16_t endport, void* callback)
 {
-  uint16_t i;
+  uint16_t i = 0;
   for (i = startport; i <= endport; i++)
     {
       port_write_callback16[i] = callback;
@@ -150,7 +150,7 @@ set_port_write_redirector_16(uint16_t startport, uint16_t endport, void* callbac
 void
 set_port_read_redirector_16(uint16_t startport, uint16_t endport, void* callback)
 {
-  uint16_t i;
+  uint16_t i = 0;
   for (i = startport; i <= endport; i++)
     {
       port_read_callback16[i] = callback;

@@ -39,7 +39,7 @@ getssourcebyte()
 void
 tickssource()
 {
-  uint8_t rotatefifo;
+  uint8_t rotatefifo = 0;
   if ((ssourceptr == 0) || (!ssourceactive))
     {
       ssourcecursample = 0;
