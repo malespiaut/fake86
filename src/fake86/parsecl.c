@@ -156,7 +156,7 @@ parsecl(int argc, char* argv[])
   textbase = 0xB8000;
   ethif = 254;
   usefullscreen = 0;
-  biosfile = PATH_DATAFILES "pcxtbios25.rom";
+  biosfile = PATH_DATAFILES "pcxtbios31.rom";
   for (i = 1; i < argc; i++)
     {
       if (strcmpi(argv[i], "-h") == 0)
