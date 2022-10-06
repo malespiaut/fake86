@@ -38,7 +38,7 @@ extern uint64_t hostfreq, lasttick, curtick, tickgap, totalexec;
 void
 out8253(uint16_t portnum, uint8_t value)
 {
-  uint8_t curbyte;
+  uint8_t curbyte = 0;
   portnum &= 3;
   switch (portnum)
     {
@@ -79,7 +79,7 @@ out8253(uint16_t portnum, uint8_t value)
 uint8_t
 in8253(uint16_t portnum)
 {
-  uint8_t curbyte;
+  uint8_t curbyte = 0;
   portnum &= 3;
   switch (portnum)
     {
