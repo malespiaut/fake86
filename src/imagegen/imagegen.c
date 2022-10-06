@@ -49,14 +49,14 @@ main(int argc, char* argv[])
     }
 
   image = fopen(argv[1], "wb");
-  if (image == NULL)
+  if (!image)
     {
       printf("Unable to create new file: %s\n", argv[1]);
       return (1);
     }
 
   blank = (void*)malloc(1048576);
-  if (blank == NULL)
+  if (!blank)
     {
       printf("Unable to allocate enough memory!\n");
       return (1);
