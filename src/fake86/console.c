@@ -153,6 +153,8 @@ runconsole(void* dummy)
           running = 0;
         }
       else
-        printf("Invalid command was entered.\n");
+        {
+          printf("Invalid command was entered.\n");
+        }
     }
 }

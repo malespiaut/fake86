@@ -41,7 +41,9 @@ void
 bufNewData(uint8_t value)
 {
   if (blaster.memptr >= sizeof(blaster.mem))
-    return;
+    {
+      return;
+    }
   blaster.mem[blaster.memptr] = value;
   blaster.memptr++;
 }
@@ -127,7 +129,9 @@ cmdBlaster(uint8_t value)
         }
       // blaster.waitforarg--; // = 0;
       if (recognized)
-        return;
+        {
+          return;
+        }
     }
 
   switch (value)
@@ -168,9 +172,13 @@ cmdBlaster(uint8_t value)
       break;
     case 0xD8: // get speaker status
       if (blaster.speakerstate)
-        bufNewData(0xFF);
+        {
+          bufNewData(0xFF);
+        }
       else
-        bufNewData(0x00);
+        {
+          bufNewData(0x00);
+        }
       break;
     case 0xDA: // exit 8-bit auto-init DMA I/O mode
       blaster.usingdma = 0;
@@ -242,7 +250,9 @@ outBlaster(uint16_t portnum, uint8_t value)
     case 0xC: // write command/data
       cmdBlaster(value);
       if (blaster.waitforarg != 3)
-        blaster.lastcmdval = value;
+        {
+          blaster.lastcmdval = value;
+        }
       break;
     }
 }
@@ -285,9 +295,13 @@ inBlaster(uint16_t portnum)
       break;
     case 0xE: // read-buffer status
       if (blaster.memptr > 0)
-        ret = 0x80;
+        {
+          ret = 0x80;
+        }
       else
-        ret = 0x00;
+        {
+          ret = 0x00;
+        }
       break;
     default:
       ret = 0x00;
@@ -304,7 +318,9 @@ void
 tickBlaster()
 {
   if (!blaster.usingdma)
-    return;
+    {
+      return;
+    }
   /*if (blaster.paused8) {
   blaster.sample = 128;
   return;
@@ -334,9 +350,13 @@ int16_t
 getBlasterSample()
 {
   if (blaster.speakerstate == 0)
-    return (0);
+    {
+      return (0);
+    }
   else
-    return ((int16_t)blaster.sample - 128);
+    {
+      return ((int16_t)blaster.sample - 128);
+    }
 }
 
 void

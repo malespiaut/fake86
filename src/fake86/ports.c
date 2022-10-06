@@ -49,14 +49,20 @@ portout(uint16_t portnum, uint8_t value)
     {
     case 0x61:
       if ((value & 3) == 3)
-        speakerenabled = 1;
+        {
+          speakerenabled = 1;
+        }
       else
-        speakerenabled = 0;
+        {
+          speakerenabled = 0;
+        }
       return;
     }
   do_callback_write = (void (*)(uint16_t portnum, uint8_t value))port_write_callback[portnum];
   if (do_callback_write != (void*)0)
-    (*do_callback_write)(portnum, value);
+    {
+      (*do_callback_write)(portnum, value);
+    }
 }
 
 uint8_t
@@ -75,7 +81,9 @@ portin(uint16_t portnum)
     }
   do_callback_read = (uint8_t(*)(uint16_t portnum))port_read_callback[portnum];
   if (do_callback_read != (void*)0)
-    return ((*do_callback_read)(portnum));
+    {
+      return ((*do_callback_read)(portnum));
+    }
   return (0xFF);
 }
 
@@ -100,7 +108,9 @@ portin16(uint16_t portnum)
 
   do_callback_read16 = (uint16_t(*)(uint16_t portnum))port_read_callback16[portnum];
   if (do_callback_read16 != (void*)0)
-    return ((*do_callback_read16)(portnum));
+    {
+      return ((*do_callback_read16)(portnum));
+    }
 
   ret = (uint16_t)portin(portnum);
   ret |= (uint16_t)portin(portnum + 1) << 8;

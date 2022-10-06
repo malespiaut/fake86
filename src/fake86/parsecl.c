@@ -54,15 +54,25 @@ hextouint(char* src)
     {
       cc = src[i];
       if (cc == 0)
-        break;
+        {
+          break;
+        }
       if ((cc >= 'a') && (cc <= 'F'))
-        cc = cc - 'a' + 10;
+        {
+          cc = cc - 'a' + 10;
+        }
       else if ((cc >= 'A') && (cc <= 'F'))
-        cc = cc - 'A' + 10;
+        {
+          cc = cc - 'A' + 10;
+        }
       else if ((cc >= '0') && (cc <= '9'))
-        cc = cc - '0';
+        {
+          cc = cc - '0';
+        }
       else
-        return (0);
+        {
+          return (0);
+        }
       tempuint <<= 4;
       tempuint |= cc;
     }
@@ -150,11 +160,17 @@ parsecl(int argc, char* argv[])
   for (i = 1; i < argc; i++)
     {
       if (strcmpi(argv[i], "-h") == 0)
-        showhelp();
+        {
+          showhelp();
+        }
       else if (strcmpi(argv[i], "-?") == 0)
-        showhelp();
+        {
+          showhelp();
+        }
       else if (strcmpi(argv[i], "-help") == 0)
-        showhelp();
+        {
+          showhelp();
+        }
       else if (strcmpi(argv[i], "-fd0") == 0)
         {
           i++;
@@ -191,17 +207,25 @@ parsecl(int argc, char* argv[])
         {
           i++;
           if (strcmpi(argv[i], "list") == 0)
-            ethif = 255;
+            {
+              ethif = 255;
+            }
           else
-            ethif = atoi(argv[i]);
+            {
+              ethif = atoi(argv[i]);
+            }
         }
       else if (strcmpi(argv[i], "-boot") == 0)
         {
           i++;
           if (strcmpi(argv[i], "rom") == 0)
-            bootdrive = 255;
+            {
+              bootdrive = 255;
+            }
           else
-            bootdrive = atoi(argv[i]);
+            {
+              bootdrive = atoi(argv[i]);
+            }
         }
       else if (strcmpi(argv[i], "-ssource") == 0)
         {
@@ -239,23 +263,41 @@ parsecl(int argc, char* argv[])
           speed = (uint32_t)atol(argv[i]);
         }
       else if (strcmpi(argv[i], "-noscale") == 0)
-        noscale = 1;
+        {
+          noscale = 1;
+        }
       else if (strcmpi(argv[i], "-verbose") == 0)
-        verbose = 1;
+        {
+          verbose = 1;
+        }
       else if (strcmpi(argv[i], "-smooth") == 0)
-        nosmooth = 0;
+        {
+          nosmooth = 0;
+        }
       else if (strcmpi(argv[i], "-fps") == 0)
-        renderbenchmark = 1;
+        {
+          renderbenchmark = 1;
+        }
       else if (strcmpi(argv[i], "-nosound") == 0)
-        doaudio = 0;
+        {
+          doaudio = 0;
+        }
       else if (strcmpi(argv[i], "-fullscreen") == 0)
-        usefullscreen = SDL_FULLSCREEN;
+        {
+          usefullscreen = SDL_FULLSCREEN;
+        }
       else if (strcmpi(argv[i], "-delay") == 0)
-        framedelay = atol(argv[++i]);
+        {
+          framedelay = atol(argv[++i]);
+        }
       else if (strcmpi(argv[i], "-console") == 0)
-        useconsole = 1;
+        {
+          useconsole = 1;
+        }
       else if (strcmpi(argv[i], "-slowsys") == 0)
-        slowsystem = 1;
+        {
+          slowsystem = 1;
+        }
       else if (strcmpi(argv[i], "-oprom") == 0)
         {
           i++;
@@ -272,10 +314,16 @@ parsecl(int argc, char* argv[])
   if (bootdrive == 254)
     {
       if (disk[0x80].inserted)
-        bootdrive = 0x80;
+        {
+          bootdrive = 0x80;
+        }
       else if (disk[0x00].inserted)
-        bootdrive = 0;
+        {
+          bootdrive = 0;
+        }
       else
-        bootdrive = 0xFF; // ROM BASIC fallback
+        {
+          bootdrive = 0xFF; // ROM BASIC fallback
+        }
     }
 }

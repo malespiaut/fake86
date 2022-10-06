@@ -325,9 +325,13 @@ handleinput()
               keydown[0x1D] = 0;
               keydown[0x38] = 0;
               if (usefullscreen)
-                usefullscreen = 0;
+                {
+                  usefullscreen = 0;
+                }
               else
-                usefullscreen = SDL_FULLSCREEN;
+                {
+                  usefullscreen = SDL_FULLSCREEN;
+                }
               scrmodechange = 1;
               break;
             }
@@ -346,28 +350,44 @@ handleinput()
             }
           tempbuttons = SDL_GetMouseState(NULL, NULL);
           if (tempbuttons & 1)
-            buttons = 2;
+            {
+              buttons = 2;
+            }
           else
-            buttons = 0;
+            {
+              buttons = 0;
+            }
           if (tempbuttons & 4)
-            buttons |= 1;
+            {
+              buttons |= 1;
+            }
           sermouseevent(buttons, 0, 0);
           break;
         case SDL_MOUSEBUTTONUP:
           if (SDL_WM_GrabInput(SDL_GRAB_QUERY) == SDL_GRAB_OFF)
-            break;
+            {
+              break;
+            }
           tempbuttons = SDL_GetMouseState(NULL, NULL);
           if (tempbuttons & 1)
-            buttons = 2;
+            {
+              buttons = 2;
+            }
           else
-            buttons = 0;
+            {
+              buttons = 0;
+            }
           if (tempbuttons & 4)
-            buttons |= 1;
+            {
+              buttons |= 1;
+            }
           sermouseevent(buttons, 0, 0);
           break;
         case SDL_MOUSEMOTION:
           if (SDL_WM_GrabInput(SDL_GRAB_QUERY) == SDL_GRAB_OFF)
-            break;
+            {
+              break;
+            }
           SDL_GetRelativeMouseState(&mx, &my);
           sermouseevent(buttons, (int8_t)mx, (int8_t)my);
           SDL_WarpMouse(screen->w / 2, screen->h / 2);
@@ -376,7 +396,9 @@ handleinput()
               SDL_PollEvent(&event);
               SDL_GetRelativeMouseState(&mx, &my);
               if ((mx == 0) && (my == 0))
-                break;
+                {
+                  break;
+                }
             }
           break;
         case SDL_QUIT:

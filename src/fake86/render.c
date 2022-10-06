@@ -75,16 +75,22 @@ initscreen(uint8_t* ver)
   if (doaudio)
     {
       if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER))
-        return (0);
+        {
+          return (0);
+        }
     }
   else
     {
       if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER))
-        return (0);
+        {
+          return (0);
+        }
     }
   screen = SDL_SetVideoMode(640, 400, 32, SDL_HWSURFACE);
   if (screen == NULL)
-    return (0);
+    {
+      return (0);
+    }
   sprintf(windowtitle, "%s", ver);
   setwindowtitle("");
   initcga();
@@ -109,7 +115,9 @@ createscalemap()
   xscale = (double)nw / (double)screen->w;
   yscale = (double)nh / (double)screen->h;
   if (scalemap != NULL)
-    free(scalemap);
+    {
+      free(scalemap);
+    }
   scalemap = (void*)malloc(((uint32_t)screen->w + 1) * (uint32_t)screen->h * 4);
   if (scalemap == NULL)
     {
@@ -164,7 +172,9 @@ VideoThread(void* dummy)
             {
               MutexLock(screenmutex);
               if (regenscalemap)
-                createscalemap();
+                {
+                  createscalemap();
+                }
               draw();
               MutexUnlock(screenmutex);
             }
@@ -174,7 +184,9 @@ VideoThread(void* dummy)
         {
           delaycalc = framedelay - (SDL_GetTicks() - cursorcurtick);
           if (delaycalc > framedelay)
-            delaycalc = framedelay;
+            {
+              delaycalc = framedelay;
+            }
           SDL_Delay(delaycalc);
         }
     }
@@ -192,7 +204,9 @@ doscrmodechange()
   if (scrmodechange)
     {
       if (screen != NULL)
-        SDL_FreeSurface(screen);
+        {
+          SDL_FreeSurface(screen);
+        }
 #ifdef _WIN32
       if (usefullscreen)
         HideMenu();
@@ -200,27 +214,43 @@ doscrmodechange()
         ShowMenu();
 #endif
       if (constantw && constanth)
-        screen = SDL_SetVideoMode(constantw, constanth, 32, SDL_HWSURFACE | usefullscreen);
+        {
+          screen = SDL_SetVideoMode(constantw, constanth, 32, SDL_HWSURFACE | usefullscreen);
+        }
       else if (noscale)
-        screen = SDL_SetVideoMode(nw, nh, 32, SDL_HWSURFACE | usefullscreen);
+        {
+          screen = SDL_SetVideoMode(nw, nh, 32, SDL_HWSURFACE | usefullscreen);
+        }
       else
         {
           if ((nw >= 640) || (nh >= 400))
-            screen = SDL_SetVideoMode(nw, nh, 32, SDL_HWSURFACE | usefullscreen);
+            {
+              screen = SDL_SetVideoMode(nw, nh, 32, SDL_HWSURFACE | usefullscreen);
+            }
           else
-            screen = SDL_SetVideoMode(640, 400, 32, SDL_HWSURFACE | usefullscreen);
+            {
+              screen = SDL_SetVideoMode(640, 400, 32, SDL_HWSURFACE | usefullscreen);
+            }
         }
       if (usefullscreen)
-        SDL_WM_GrabInput(SDL_GRAB_ON); // always have mouse grab turned on for full screen mode
+        {
+          SDL_WM_GrabInput(SDL_GRAB_ON); // always have mouse grab turned on for full screen mode
+        }
       else
-        SDL_WM_GrabInput(usegrabmode);
+        {
+          SDL_WM_GrabInput(usegrabmode);
+        }
       SDL_ShowCursor(SDL_DISABLE);
       if (!usefullscreen)
         {
           if (usegrabmode == SDL_GRAB_ON)
-            setwindowtitle(" (press Ctrl + Alt to release mouse)");
+            {
+              setwindowtitle(" (press Ctrl + Alt to release mouse)");
+            }
           else
-            setwindowtitle("");
+            {
+              setwindowtitle("");
+            }
         }
       regenscalemap = 1;
       createscalemap();
@@ -241,8 +271,12 @@ stretchblit(SDL_Surface* target)
   limity = (uint32_t)((double)nh / (double)target->h);
 
   if (SDL_MUSTLOCK(target))
-    if (SDL_LockSurface(target) < 0)
-      return;
+    {
+      if (SDL_LockSurface(target) < 0)
+        {
+          return;
+        }
+    }
 
   lasty = 0;
   scalemapptr = 0;
@@ -253,9 +287,13 @@ stretchblit(SDL_Surface* target)
       consecutivex = 0;
       lastx = 0;
       if (srcy == lasty)
-        consecutivey++;
+        {
+          consecutivey++;
+        }
       else
-        consecutivey = 0;
+        {
+          consecutivey = 0;
+        }
       for (dstx = 0; dstx < (uint32_t)target->w; dstx++)
         {
           srcx = scalemap[scalemapptr++];
@@ -264,9 +302,13 @@ stretchblit(SDL_Surface* target)
           g = pixelrgb[1];
           b = pixelrgb[2];
           if (srcx == lastx)
-            consecutivex++;
+            {
+              consecutivex++;
+            }
           else
-            consecutivex = 0;
+            {
+              consecutivex = 0;
+            }
           if ((consecutivex > limitx) && (consecutivey > limity))
             {
               pixelrgb = (uint8_t*)&prestretch[srcy][srcx + 1];
@@ -315,7 +357,9 @@ stretchblit(SDL_Surface* target)
     }
 
   if (SDL_MUSTLOCK(target))
-    SDL_UnlockSurface(target);
+    {
+      SDL_UnlockSurface(target);
+    }
   SDL_UpdateRect(target, 0, 0, target->w, target->h);
 }
 
@@ -327,8 +371,12 @@ roughblit(SDL_Surface* target)
   uint8_t* pixelrgb;
 
   if (SDL_MUSTLOCK(target))
-    if (SDL_LockSurface(target) < 0)
-      return;
+    {
+      if (SDL_LockSurface(target) < 0)
+        {
+          return;
+        }
+    }
 
   scalemapptr = 0;
   for (dsty = 0; dsty < (uint32_t)target->h; dsty++)
@@ -344,7 +392,9 @@ roughblit(SDL_Surface* target)
     }
 
   if (SDL_MUSTLOCK(target))
-    SDL_UnlockSurface(target);
+    {
+      SDL_UnlockSurface(target);
+    }
   SDL_UpdateRect(target, 0, 0, target->w, target->h);
 }
 
@@ -364,8 +414,12 @@ doubleblit(SDL_Surface* target)
   uint8_t* pixelrgb;
 
   if (SDL_MUSTLOCK(target))
-    if (SDL_LockSurface(target) < 0)
-      return;
+    {
+      if (SDL_LockSurface(target) < 0)
+        {
+          return;
+        }
+    }
 
   for (dsty = 0; dsty < (uint32_t)target->h; dsty += 2)
     {
@@ -383,7 +437,9 @@ doubleblit(SDL_Surface* target)
     }
 
   if (SDL_MUSTLOCK(target))
-    SDL_UnlockSurface(target);
+    {
+      SDL_UnlockSurface(target);
+    }
   SDL_UpdateRect(target, 0, 0, target->w, target->h);
 }
 
@@ -404,60 +460,74 @@ draw()
       nh = 400;
       vgapage = ((uint32_t)VGA_CRTC[0xC] << 8) + (uint32_t)VGA_CRTC[0xD];
       for (y = 0; y < 400; y++)
-        for (x = 0; x < 640; x++)
-          {
-            if (cols == 80)
-              {
-                charx = x / 8;
-                divx = 1;
-              }
-            else
-              {
-                charx = x / 16;
-                divx = 2;
-              }
-            if ((portram[0x3D8] == 9) && (portram[0x3D4] == 9))
-              {
-                chary = y / 4;
-                vidptr = vgapage + videobase + chary * cols * 2 + charx * 2;
-                curchar = RAM[vidptr];
-                color = fontcga[curchar * 128 + (y % 4) * 8 + ((x / divx) % 8)];
-              }
-            else
-              {
-                chary = y / 16;
-                vidptr = videobase + chary * cols * 2 + charx * 2;
-                curchar = RAM[vidptr];
-                color = fontcga[curchar * 128 + (y % 16) * 8 + ((x / divx) % 8)];
-              }
-            if (vidcolor)
-              {
-                /*if (!color) if (portram[0x3D8]&128) color = palettecga[ (RAM[vidptr+1]/16) &7];
-                  else*/
-                if (!color)
-                  color = palettecga[RAM[vidptr + 1] / 16]; // high intensity background
-                else
-                  color = palettecga[RAM[vidptr + 1] & 15];
-              }
-            else
-              {
-                if ((RAM[vidptr + 1] & 0x70))
-                  {
-                    if (!color)
-                      color = palettecga[7];
-                    else
-                      color = palettecga[0];
-                  }
-                else
-                  {
-                    if (!color)
-                      color = palettecga[0];
-                    else
-                      color = palettecga[7];
-                  }
-              }
-            prestretch[y][x] = color;
-          }
+        {
+          for (x = 0; x < 640; x++)
+            {
+              if (cols == 80)
+                {
+                  charx = x / 8;
+                  divx = 1;
+                }
+              else
+                {
+                  charx = x / 16;
+                  divx = 2;
+                }
+              if ((portram[0x3D8] == 9) && (portram[0x3D4] == 9))
+                {
+                  chary = y / 4;
+                  vidptr = vgapage + videobase + chary * cols * 2 + charx * 2;
+                  curchar = RAM[vidptr];
+                  color = fontcga[curchar * 128 + (y % 4) * 8 + ((x / divx) % 8)];
+                }
+              else
+                {
+                  chary = y / 16;
+                  vidptr = videobase + chary * cols * 2 + charx * 2;
+                  curchar = RAM[vidptr];
+                  color = fontcga[curchar * 128 + (y % 16) * 8 + ((x / divx) % 8)];
+                }
+              if (vidcolor)
+                {
+                  /*if (!color) if (portram[0x3D8]&128) color = palettecga[ (RAM[vidptr+1]/16) &7];
+                    else*/
+                  if (!color)
+                    {
+                      color = palettecga[RAM[vidptr + 1] / 16]; // high intensity background
+                    }
+                  else
+                    {
+                      color = palettecga[RAM[vidptr + 1] & 15];
+                    }
+                }
+              else
+                {
+                  if ((RAM[vidptr + 1] & 0x70))
+                    {
+                      if (!color)
+                        {
+                          color = palettecga[7];
+                        }
+                      else
+                        {
+                          color = palettecga[0];
+                        }
+                    }
+                  else
+                    {
+                      if (!color)
+                        {
+                          color = palettecga[0];
+                        }
+                      else
+                        {
+                          color = palettecga[7];
+                        }
+                    }
+                }
+              prestretch[y][x] = color;
+            }
+        }
       break;
     case 4:
     case 5:
@@ -492,7 +562,9 @@ draw()
                 {
                   curpixel = curpixel * 2 + usepal + intensity;
                   if (curpixel == (usepal + intensity))
-                    curpixel = cgabg;
+                    {
+                      curpixel = cgabg;
+                    }
                   color = palettecga[curpixel];
                   prestretch[y][x] = color;
                 }
@@ -537,150 +609,192 @@ draw()
                 color = 0xFFFFFF00;
 #else
               if (curpixel)
-                color = 0x00FFFFFF;
+                {
+                  color = 0x00FFFFFF;
 #endif
-              else
-                color = 0x00000000;
-              prestretch[y][x] = color;
             }
-        }
-      break;
-    case 0x8:   // 160x200 16-color (PCjr)
-      nw = 640; // fix this
-      nh = 400; // part later
-      for (y = 0; y < 400; y++)
-        for (x = 0; x < 640; x++)
-          {
-            vidptr = 0xB8000 + (y >> 2) * 80 + (x >> 3) + ((y >> 1) & 1) * 8192;
-            if (((x >> 1) & 1) == 0)
-              color = palettecga[RAM[vidptr] >> 4];
-            else
-              color = palettecga[RAM[vidptr] & 15];
-            prestretch[y][x] = color;
-          }
-      break;
-    case 0x9:   // 320x200 16-color (Tandy/PCjr)
-      nw = 640; // fix this
-      nh = 400; // part later
-      for (y = 0; y < 400; y++)
-        for (x = 0; x < 640; x++)
-          {
-            vidptr = 0xB8000 + (y >> 3) * 160 + (x >> 2) + ((y >> 1) & 3) * 8192;
-            if (((x >> 1) & 1) == 0)
-              color = palettecga[RAM[vidptr] >> 4];
-            else
-              color = palettecga[RAM[vidptr] & 15];
-            prestretch[y][x] = color;
-          }
-      break;
-    case 0xD:
-    case 0xE:
-      nw = 640; // fix this
-      nh = 400; // part later
-      for (y = 0; y < 400; y++)
-        for (x = 0; x < 640; x++)
-          {
-            divx = x >> 1;
-            divy = y >> 1;
-            vidptr = divy * 40 + (divx >> 3);
-            x1 = 7 - (divx & 7);
-            color = (VRAM[vidptr] >> x1) & 1;
-            color += (((VRAM[0x10000 + vidptr] >> x1) & 1) << 1);
-            color += (((VRAM[0x20000 + vidptr] >> x1) & 1) << 2);
-            color += (((VRAM[0x30000 + vidptr] >> x1) & 1) << 3);
-            color = palettevga[color];
-            prestretch[y][x] = color;
-          }
-      break;
-    case 0x10:
-      nw = 640;
-      nh = 350;
-      for (y = 0; y < 350; y++)
-        for (x = 0; x < 640; x++)
-          {
-            vidptr = y * 80 + (x >> 3);
-            x1 = 7 - (x & 7);
-            color = (VRAM[vidptr] >> x1) & 1;
-            color |= (((VRAM[0x10000 + vidptr] >> x1) & 1) << 1);
-            color |= (((VRAM[0x20000 + vidptr] >> x1) & 1) << 2);
-            color |= (((VRAM[0x30000 + vidptr] >> x1) & 1) << 3);
-            color = palettevga[color];
-            prestretch[y][x] = color;
-          }
-      break;
-    case 0x12:
-      nw = 640;
-      nh = 480;
-      for (y = 0; y < nh; y++)
-        for (x = 0; x < nw; x++)
-          {
-            vidptr = y * 80 + (x / 8);
-            color = (VRAM[vidptr] >> (~x & 7)) & 1;
-            color |= ((VRAM[vidptr + 0x10000] >> (~x & 7)) & 1) << 1;
-            color |= ((VRAM[vidptr + 0x20000] >> (~x & 7)) & 1) << 2;
-            color |= ((VRAM[vidptr + 0x30000] >> (~x & 7)) & 1) << 3;
-            prestretch[y][x] = palettevga[color];
-          }
-      break;
-    case 0x13:
-      if (vtotal == 11)
-        { // ugly hack to show Flashback at the proper resolution
-          nw = 256;
-          nh = 224;
-        }
-      else
-        {
-          nw = 320;
-          nh = 200;
-        }
-      if (VGA_SC[4] & 6)
-        planemode = 1;
-      else
-        planemode = 0;
-      vgapage = ((uint32_t)VGA_CRTC[0xC] << 8) + (uint32_t)VGA_CRTC[0xD];
-      for (y = 0; y < nh; y++)
-        for (x = 0; x < nw; x++)
-          {
-            if (!planemode)
-              color = palettevga[RAM[videobase + ((vgapage + y * nw + x) & 0xFFFF)]];
-            // if (!planemode) color = palettevga[RAM[videobase + y*nw + x]];
-            else
-              {
-                vidptr = y * nw + x;
-                vidptr = vidptr / 4 + (x & 3) * 0x10000;
-                vidptr = vidptr + vgapage - (VGA_ATTR[0x13] & 15);
-                color = palettevga[VRAM[vidptr]];
-              }
-            prestretch[y][x] = color;
-          }
-    }
-
-  if (vidgfxmode == 0)
-    {
-      if (cursorvisible)
-        {
-          curheight = 2;
-          if (cols == 80)
-            blockw = 8;
           else
+          {
+            color = 0x00000000;
+          }
+          prestretch[y][x] = color;
+        }
+    }
+  break;
+case 0x8:   // 160x200 16-color (PCjr)
+  nw = 640; // fix this
+  nh = 400; // part later
+  for (y = 0; y < 400; y++)
+    {
+      for (x = 0; x < 640; x++)
+        {
+          vidptr = 0xB8000 + (y >> 2) * 80 + (x >> 3) + ((y >> 1) & 1) * 8192;
+          if (((x >> 1) & 1) == 0)
+            {
+              color = palettecga[RAM[vidptr] >> 4];
+            }
+          else
+            {
+              color = palettecga[RAM[vidptr] & 15];
+            }
+          prestretch[y][x] = color;
+        }
+    }
+  break;
+case 0x9:   // 320x200 16-color (Tandy/PCjr)
+  nw = 640; // fix this
+  nh = 400; // part later
+  for (y = 0; y < 400; y++)
+    {
+      for (x = 0; x < 640; x++)
+        {
+          vidptr = 0xB8000 + (y >> 3) * 160 + (x >> 2) + ((y >> 1) & 3) * 8192;
+          if (((x >> 1) & 1) == 0)
+            {
+              color = palettecga[RAM[vidptr] >> 4];
+            }
+          else
+            {
+              color = palettecga[RAM[vidptr] & 15];
+            }
+          prestretch[y][x] = color;
+        }
+    }
+  break;
+case 0xD:
+case 0xE:
+  nw = 640; // fix this
+  nh = 400; // part later
+  for (y = 0; y < 400; y++)
+    {
+      for (x = 0; x < 640; x++)
+        {
+          divx = x >> 1;
+          divy = y >> 1;
+          vidptr = divy * 40 + (divx >> 3);
+          x1 = 7 - (divx & 7);
+          color = (VRAM[vidptr] >> x1) & 1;
+          color += (((VRAM[0x10000 + vidptr] >> x1) & 1) << 1);
+          color += (((VRAM[0x20000 + vidptr] >> x1) & 1) << 2);
+          color += (((VRAM[0x30000 + vidptr] >> x1) & 1) << 3);
+          color = palettevga[color];
+          prestretch[y][x] = color;
+        }
+    }
+  break;
+case 0x10:
+  nw = 640;
+  nh = 350;
+  for (y = 0; y < 350; y++)
+    {
+      for (x = 0; x < 640; x++)
+        {
+          vidptr = y * 80 + (x >> 3);
+          x1 = 7 - (x & 7);
+          color = (VRAM[vidptr] >> x1) & 1;
+          color |= (((VRAM[0x10000 + vidptr] >> x1) & 1) << 1);
+          color |= (((VRAM[0x20000 + vidptr] >> x1) & 1) << 2);
+          color |= (((VRAM[0x30000 + vidptr] >> x1) & 1) << 3);
+          color = palettevga[color];
+          prestretch[y][x] = color;
+        }
+    }
+  break;
+case 0x12:
+  nw = 640;
+  nh = 480;
+  for (y = 0; y < nh; y++)
+    {
+      for (x = 0; x < nw; x++)
+        {
+          vidptr = y * 80 + (x / 8);
+          color = (VRAM[vidptr] >> (~x & 7)) & 1;
+          color |= ((VRAM[vidptr + 0x10000] >> (~x & 7)) & 1) << 1;
+          color |= ((VRAM[vidptr + 0x20000] >> (~x & 7)) & 1) << 2;
+          color |= ((VRAM[vidptr + 0x30000] >> (~x & 7)) & 1) << 3;
+          prestretch[y][x] = palettevga[color];
+        }
+    }
+  break;
+case 0x13:
+  if (vtotal == 11)
+    { // ugly hack to show Flashback at the proper resolution
+      nw = 256;
+      nh = 224;
+    }
+  else
+    {
+      nw = 320;
+      nh = 200;
+    }
+  if (VGA_SC[4] & 6)
+    {
+      planemode = 1;
+    }
+  else
+    {
+      planemode = 0;
+    }
+  vgapage = ((uint32_t)VGA_CRTC[0xC] << 8) + (uint32_t)VGA_CRTC[0xD];
+  for (y = 0; y < nh; y++)
+    {
+      for (x = 0; x < nw; x++)
+        {
+          if (!planemode)
+            {
+              color = palettevga[RAM[videobase + ((vgapage + y * nw + x) & 0xFFFF)]];
+              // if (!planemode) color = palettevga[RAM[videobase + y*nw + x]];
+            }
+          else
+            {
+              vidptr = y * nw + x;
+              vidptr = vidptr / 4 + (x & 3) * 0x10000;
+              vidptr = vidptr + vgapage - (VGA_ATTR[0x13] & 15);
+              color = palettevga[VRAM[vidptr]];
+            }
+          prestretch[y][x] = color;
+        }
+    }
+}
+
+if (vidgfxmode == 0)
+  {
+    if (cursorvisible)
+      {
+        curheight = 2;
+        if (cols == 80)
+          {
+            blockw = 8;
+          }
+        else
+          {
             blockw = 16;
-          x1 = cursx * blockw;
-          y1 = cursy * 8 + 8 - curheight;
-          for (y = y1 * 2; y <= y1 * 2 + curheight - 1; y++)
+          }
+        x1 = cursx * blockw;
+        y1 = cursy * 8 + 8 - curheight;
+        for (y = y1 * 2; y <= y1 * 2 + curheight - 1; y++)
+          {
             for (x = x1; x <= x1 + blockw - 1; x++)
               {
                 color = palettecga[RAM[videobase + cursy * cols * 2 + cursx * 2 + 1] & 15];
                 prestretch[y & 1023][x & 1023] = color;
               }
-        }
-    }
-  if (nosmooth)
-    {
-      if (((nw << 1) == screen->w) && ((nh << 1) == screen->h))
+          }
+      }
+  }
+if (nosmooth)
+  {
+    if (((nw << 1) == screen->w) && ((nh << 1) == screen->h))
+      {
         doubleblit(screen);
-      else
+      }
+    else
+      {
         roughblit(screen);
-    }
-  else
+      }
+  }
+else
+  {
     stretchblit(screen);
+  }
 }

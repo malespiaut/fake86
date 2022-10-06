@@ -36,9 +36,13 @@ void
 bufsermousedata(uint8_t value)
 {
   if (sermouse.bufptr == 16)
-    return;
+    {
+      return;
+    }
   if (sermouse.bufptr == 0)
-    doirq(4);
+    {
+      doirq(4);
+    }
   sermouse.buf[sermouse.bufptr++] = value;
 }
 
@@ -80,9 +84,13 @@ insermouse(uint16_t portnum)
       memmove(sermouse.buf, &sermouse.buf[1], 15);
       sermouse.bufptr--;
       if (sermouse.bufptr < 0)
-        sermouse.bufptr = 0;
+        {
+          sermouse.bufptr = 0;
+        }
       if (sermouse.bufptr > 0)
-        doirq(4);
+        {
+          doirq(4);
+        }
       sermouse.reg[4] = ~sermouse.reg[4] & 1;
       return (temp);
     case 5: // line status register (read-only)
@@ -104,11 +112,17 @@ sermouseevent(uint8_t buttons, int8_t xrel, int8_t yrel)
 {
   uint8_t highbits = 0;
   if (xrel < 0)
-    highbits = 3;
+    {
+      highbits = 3;
+    }
   else
-    highbits = 0;
+    {
+      highbits = 0;
+    }
   if (yrel < 0)
-    highbits |= 12;
+    {
+      highbits |= 12;
+    }
   bufsermousedata(0x40 | (buttons << 4) | highbits);
   bufsermousedata(xrel & 63);
   bufsermousedata(yrel & 63);

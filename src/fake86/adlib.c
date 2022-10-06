@@ -120,9 +120,13 @@ outadlib(uint16_t portnum, uint8_t value)
       break;
     case 0xBD:
       if (value & 0x10)
-        adlibpercussion = 1;
+        {
+          adlibpercussion = 1;
+        }
       else
-        adlibpercussion = 0;
+        {
+          adlibpercussion = 0;
+        }
       break;
     }
   if ((portnum >= 0x60) && (portnum <= 0x75))
@@ -148,7 +152,9 @@ outadlib(uint16_t portnum, uint8_t value)
     { // waveform select
       portnum &= 15;
       if (portnum < 9)
-        adlibch[portnum].wavesel = value & 3;
+        {
+          adlibch[portnum].wavesel = value & 3;
+        }
     }
 }
 
@@ -156,9 +162,13 @@ uint8_t
 inadlib(uint16_t portnum)
 {
   if (!adlibregmem[4])
-    adlibstatus = 0;
+    {
+      adlibstatus = 0;
+    }
   else
-    adlibstatus = 0x80;
+    {
+      adlibstatus = 0x80;
+    }
   adlibstatus = adlibstatus + (adlibregmem[4] & 1) * 0x40 + (adlibregmem[4] & 2) * 0x10;
   return (adlibstatus);
 }
@@ -168,7 +178,9 @@ adlibfreq(uint8_t chan)
 {
   uint16_t tmpfreq;
   if (!adlibch[chan].keyon)
-    return (0);
+    {
+      return (0);
+    }
   tmpfreq = (uint16_t)adlibch[chan].convfreq;
   switch (adlibch[chan].octave)
     {
@@ -209,19 +221,25 @@ adlibsample(uint8_t curchan)
   double tempstep;
 
   if (adlibpercussion && (curchan >= 6) && (curchan <= 8))
-    return (0);
+    {
+      return (0);
+    }
 
   fullstep = usesamplerate / adlibfreq(curchan);
 
   tempsample = (int32_t)oplwave[adlibch[curchan].wavesel][(uint8_t)((double)adlibstep[curchan] / ((double)fullstep / (double)256))];
   tempstep = adlibenv[curchan];
   if (tempstep > 1.0)
-    tempstep = 1;
+    {
+      tempstep = 1;
+    }
   tempsample = (int32_t)((double)tempsample * tempstep * 2.0);
 
   adlibstep[curchan]++;
   if (adlibstep[curchan] > fullstep)
-    adlibstep[curchan] = 0;
+    {
+      adlibstep[curchan] = 0;
+    }
   return (tempsample);
 }
 
@@ -257,7 +275,9 @@ tickadlib()
             {
               adlibenv[curchan] *= adlibattack[curchan];
               if (adlibenv[curchan] >= 1.0)
-                adlibdidattack[curchan] = 1;
+                {
+                  adlibdidattack[curchan] = 1;
+                }
             }
         }
     }

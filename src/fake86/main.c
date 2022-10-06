@@ -93,15 +93,19 @@ loadrom(uint32_t addr32, uint8_t* filename, uint8_t failure_fatal)
   if (!readsize)
     {
       if (failure_fatal)
-        printf("FATAL: ");
+        {
+          printf("FATAL: ");
+        }
       else
-        printf("WARNING: ");
+        {
+          printf("WARNING: ");
+        }
       printf("Unable to load %s\n", filename);
       return (0);
     }
   else
     {
-      printf("Loaded %s at 0x%05X (%lu KB)\n", filename, addr32, readsize >> 10);
+      printf("Loaded %s at 0x%05X (%u KB)\n", filename, addr32, readsize >> 10);
       return (readsize);
     }
 }
@@ -167,9 +171,13 @@ printbinary(uint8_t value)
   for (curbit = 7; curbit >= 0; curbit--)
     {
       if ((value >> curbit) & 1)
-        printf("1");
+        {
+          printf("1");
+        }
       else
-        printf("0");
+        {
+          printf("0");
+        }
     }
 }
 
@@ -179,7 +187,9 @@ inithardware()
 {
 #ifdef NETWORKING_ENABLED
   if (ethif != 254)
-    initpcap();
+    {
+      initpcap();
+    }
 #endif
   printf("Initializing emulated hardware:\n");
   memset(port_write_callback, 0, sizeof(port_write_callback));
@@ -217,7 +227,9 @@ inithardware()
   initsermouse(0x3F8, 4);
   printf("OK\n");
   if (doaudio)
-    initaudio();
+    {
+      initaudio();
+    }
   inittiming();
   initscreen((uint8_t*)build);
 }
@@ -239,7 +251,9 @@ EmuThread(void* dummy)
   while (running)
     {
       if (!speed)
-        exec86(10000);
+        {
+          exec86(10000);
+        }
       else
         {
           exec86(speed / 100);
@@ -255,7 +269,9 @@ EmuThread(void* dummy)
 #endif
         }
       if (scrmodechange)
-        doscrmodechange();
+        {
+          doscrmodechange();
+        }
       if (dohardreset)
         {
           reset86();
@@ -283,7 +299,9 @@ main(int argc, char* argv[])
   memset(readonly, 0, 0x100000);
   biossize = loadbios(biosfile);
   if (!biossize)
-    return (-1);
+    {
+      return (-1);
+    }
 #ifdef DISK_CONTROLLER_ATA
   if (!loadrom(0xD0000UL, PATH_DATAFILES "ide_xt.bin", 1))
     return (-1);
@@ -292,7 +310,9 @@ main(int argc, char* argv[])
     {
       loadrom(0xF6000UL, PATH_DATAFILES "rombasic.bin", 0);
       if (!loadrom(0xC0000UL, PATH_DATAFILES "videorom.bin", 1))
-        return (-1);
+        {
+          return (-1);
+        }
     }
   printf("\nInitializing CPU... ");
   running = 1;
@@ -331,7 +351,9 @@ main(int argc, char* argv[])
       handleinput();
 #ifdef NETWORKING_ENABLED
       if (ethif < 254)
-        dispatch();
+        {
+          dispatch();
+        }
 #endif
 #ifdef _WIN32
       Sleep(1);
@@ -341,18 +363,20 @@ main(int argc, char* argv[])
     }
   endtick = (SDL_GetTicks() - starttick) / 1000;
   if (endtick == 0)
-    endtick = 1; // avoid divide-by-zero exception in the code below, if ran for less than 1 second
+    {
+      endtick = 1; // avoid divide-by-zero exception in the code below, if ran for less than 1 second
+    }
 
   killaudio();
 
   if (renderbenchmark)
     {
-      printf("\n%llu frames rendered in %llu seconds.\n", totalframes, endtick);
-      printf("Average framerate: %llu FPS.\n", totalframes / endtick);
+      printf("\n%lu frames rendered in %lu seconds.\n", totalframes, endtick);
+      printf("Average framerate: %lu FPS.\n", totalframes / endtick);
     }
 
-  printf("\n%llu instructions executed in %llu seconds.\n", totalexec, endtick);
-  printf("Average speed: %llu instructions/second.\n", totalexec / endtick);
+  printf("\n%lu instructions executed in %lu seconds.\n", totalexec, endtick);
+  printf("Average speed: %lu instructions/second.\n", totalexec / endtick);
 
 #ifdef CPU_ADDR_MODE_CACHE
   printf("\n  Cached modregrm data access count: %llu\n", cached_access_count);
@@ -360,7 +384,9 @@ main(int argc, char* argv[])
 #endif
 
   if (useconsole)
-    exit(0); // makes sure console thread quits even if blocking
+    {
+      exit(0); // makes sure console thread quits even if blocking
+    }
 
   return (0);
 }

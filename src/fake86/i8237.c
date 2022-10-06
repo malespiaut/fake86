@@ -43,17 +43,27 @@ read8237(uint8_t channel)
 {
   uint8_t ret;
   if (dmachan[channel].masked)
-    return (128);
+    {
+      return (128);
+    }
   if (dmachan[channel].autoinit && (dmachan[channel].count > dmachan[channel].reload))
-    dmachan[channel].count = 0;
+    {
+      dmachan[channel].count = 0;
+    }
   if (dmachan[channel].count > dmachan[channel].reload)
-    return (128);
+    {
+      return (128);
+    }
   // if (dmachan[channel].direction) ret = RAM[dmachan[channel].page + dmachan[channel].addr + dmachan[channel].count];
   //	else ret = RAM[dmachan[channel].page + dmachan[channel].addr - dmachan[channel].count];
   if (dmachan[channel].direction == 0)
-    ret = RAM[dmachan[channel].page + dmachan[channel].addr + dmachan[channel].count];
+    {
+      ret = RAM[dmachan[channel].page + dmachan[channel].addr + dmachan[channel].count];
+    }
   else
-    ret = RAM[dmachan[channel].page + dmachan[channel].addr - dmachan[channel].count];
+    {
+      ret = RAM[dmachan[channel].page + dmachan[channel].addr - dmachan[channel].count];
+    }
   dmachan[channel].count++;
   return (ret);
 }
@@ -69,9 +79,13 @@ out8237(uint16_t addr, uint8_t value)
     {
     case 0x2: // channel 1 address register
       if (flipflop == 1)
-        dmachan[1].addr = (dmachan[1].addr & 0x00FF) | ((uint32_t)value << 8);
+        {
+          dmachan[1].addr = (dmachan[1].addr & 0x00FF) | ((uint32_t)value << 8);
+        }
       else
-        dmachan[1].addr = (dmachan[1].addr & 0xFF00) | value;
+        {
+          dmachan[1].addr = (dmachan[1].addr & 0xFF00) | value;
+        }
 #ifdef DEBUG_DMA
       if (flipflop == 1)
         printf("[NOTICE] DMA channel 1 address register = %04X\n", dmachan[1].addr);
@@ -80,13 +94,19 @@ out8237(uint16_t addr, uint8_t value)
       break;
     case 0x3: // channel 1 count register
       if (flipflop == 1)
-        dmachan[1].reload = (dmachan[1].reload & 0x00FF) | ((uint32_t)value << 8);
+        {
+          dmachan[1].reload = (dmachan[1].reload & 0x00FF) | ((uint32_t)value << 8);
+        }
       else
-        dmachan[1].reload = (dmachan[1].reload & 0xFF00) | value;
+        {
+          dmachan[1].reload = (dmachan[1].reload & 0xFF00) | value;
+        }
       if (flipflop == 1)
         {
           if (dmachan[1].reload == 0)
-            dmachan[1].reload = 65536;
+            {
+              dmachan[1].reload = 65536;
+            }
           dmachan[1].count = 0;
 #ifdef DEBUG_DMA
           printf("[NOTICE] DMA channel 1 reload register = %04X\n", dmachan[1].reload);
@@ -136,9 +156,13 @@ in8237(uint16_t addr)
     {
     case 3:
       if (flipflop == 1)
-        return (dmachan[1].reload >> 8);
+        {
+          return (dmachan[1].reload >> 8);
+        }
       else
-        return (dmachan[1].reload);
+        {
+          return (dmachan[1].reload);
+        }
       flipflop = ~flipflop & 1;
       break;
     }

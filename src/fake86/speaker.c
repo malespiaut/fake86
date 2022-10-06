@@ -38,7 +38,9 @@ speakergensample()
 
   speakerfullstep = (uint64_t)((float)gensamplerate / (float)i8253.chanfreq[2]);
   if (speakerfullstep < 2)
-    speakerfullstep = 2;
+    {
+      speakerfullstep = 2;
+    }
   speakerhalfstep = speakerfullstep >> 1;
   if (speakercurstep < speakerhalfstep)
     {

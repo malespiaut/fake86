@@ -39,9 +39,13 @@ uint8_t
 insertdisk(uint8_t drivenum, char* filename)
 {
   if (disk[drivenum].inserted)
-    fclose(disk[drivenum].diskfile);
+    {
+      fclose(disk[drivenum].diskfile);
+    }
   else
-    disk[drivenum].inserted = 1;
+    {
+      disk[drivenum].inserted = 1;
+    }
   disk[drivenum].diskfile = fopen(filename, "r+b");
   if (disk[drivenum].diskfile == NULL)
     {
@@ -64,9 +68,13 @@ insertdisk(uint8_t drivenum, char* filename)
       disk[drivenum].sects = 18;
       disk[drivenum].heads = 2;
       if (disk[drivenum].filesize <= 1228800)
-        disk[drivenum].sects = 15;
+        {
+          disk[drivenum].sects = 15;
+        }
       if (disk[drivenum].filesize <= 737280)
-        disk[drivenum].sects = 9;
+        {
+          disk[drivenum].sects = 9;
+        }
       if (disk[drivenum].filesize <= 368640)
         {
           disk[drivenum].cyls = 40;
@@ -87,7 +95,9 @@ ejectdisk(uint8_t drivenum)
 {
   disk[drivenum].inserted = 0;
   if (disk[drivenum].diskfile != NULL)
-    fclose(disk[drivenum].diskfile);
+    {
+      fclose(disk[drivenum].diskfile);
+    }
 }
 
 void
@@ -95,11 +105,15 @@ readdisk(uint8_t drivenum, uint16_t dstseg, uint16_t dstoff, uint16_t cyl, uint1
 {
   uint32_t memdest, lba, fileoffset, cursect, sectoffset;
   if (!sect || !disk[drivenum].inserted)
-    return;
+    {
+      return;
+    }
   lba = ((uint32_t)cyl * (uint32_t)disk[drivenum].heads + (uint32_t)head) * (uint32_t)disk[drivenum].sects + (uint32_t)sect - 1;
   fileoffset = lba * 512;
   if (fileoffset > disk[drivenum].filesize)
-    return;
+    {
+      return;
+    }
   fseek(disk[drivenum].diskfile, fileoffset, SEEK_SET);
   memdest = ((uint32_t)dstseg << 4) + (uint32_t)dstoff;
   // for the readdisk function, we need to use write86 instead of directly fread'ing into
@@ -108,7 +122,9 @@ readdisk(uint8_t drivenum, uint16_t dstseg, uint16_t dstoff, uint16_t cyl, uint1
   for (cursect = 0; cursect < sectcount; cursect++)
     {
       if (fread(sectorbuffer, 1, 512, disk[drivenum].diskfile) < 512)
-        break;
+        {
+          break;
+        }
       for (sectoffset = 0; sectoffset < 512; sectoffset++)
         {
           write86(memdest++, sectorbuffer[sectoffset]);
@@ -124,11 +140,15 @@ writedisk(uint8_t drivenum, uint16_t dstseg, uint16_t dstoff, uint16_t cyl, uint
 {
   uint32_t memdest, lba, fileoffset, cursect, sectoffset;
   if (!sect || !disk[drivenum].inserted)
-    return;
+    {
+      return;
+    }
   lba = ((uint32_t)cyl * (uint32_t)disk[drivenum].heads + (uint32_t)head) * (uint32_t)disk[drivenum].sects + (uint32_t)sect - 1;
   fileoffset = lba * 512;
   if (fileoffset > disk[drivenum].filesize)
-    return;
+    {
+      return;
+    }
   fseek(disk[drivenum].diskfile, fileoffset, SEEK_SET);
   memdest = ((uint32_t)dstseg << 4) + (uint32_t)dstoff;
   for (cursect = 0; cursect < sectcount; cursect++)
@@ -204,7 +224,9 @@ diskhandler()
               regs.byteregs[regdl] = 2;
             }
           else
-            regs.byteregs[regdl] = hdcount;
+            {
+              regs.byteregs[regdl] = hdcount;
+            }
         }
       else
         {
@@ -218,5 +240,7 @@ diskhandler()
   lastdiskah[regs.byteregs[regdl]] = regs.byteregs[regah];
   lastdiskcf[regs.byteregs[regdl]] = cf;
   if (regs.byteregs[regdl] & 0x80)
-    RAM[0x474] = regs.byteregs[regah];
+    {
+      RAM[0x474] = regs.byteregs[regah];
+    }
 }

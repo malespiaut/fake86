@@ -50,7 +50,9 @@ nethandler()
 {
   uint32_t i;
   if (ethif == 254)
-    return; // networking not enabled
+    {
+      return; // networking not enabled
+    }
   switch (regs.byteregs[regah])
     {          // function number
     case 0x00: // enable packet reception

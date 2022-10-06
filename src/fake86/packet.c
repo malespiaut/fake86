@@ -94,9 +94,13 @@ initpcap()
   printf("\n");
 
   if (ethif == 255)
-    exit(0);
+    {
+      exit(0);
+    }
   else
-    inum = ethif;
+    {
+      inum = ethif;
+    }
   printf("Using network interface %u.\n", ethif);
 
   if (inum < 1 || inum > i)
@@ -109,7 +113,9 @@ initpcap()
 
   /* Jump to the selected adapter */
   for (d = alldevs, i = 0; i < inum - 1; d = d->next, i++)
-    ;
+    {
+      ;
+    }
 
     /* Open the device */
 #ifdef _WIN32
@@ -189,9 +195,13 @@ void
 dispatch()
 {
   if (pcap_next_ex(adhandle, &hdr, &pktdata) <= 0)
-    return;
+    {
+      return;
+    }
   if (hdr->len == 0)
-    return;
+    {
+      return;
+    }
 
   net.canrecv = 0;
   memcpy(&RAM[0xD0000], &pktdata[0], hdr->len);

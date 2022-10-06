@@ -95,7 +95,9 @@ uint8_t
 audiobufferfilled()
 {
   if (audbufptr >= usebuffersize)
-    return (1);
+    {
+      return (1);
+    }
   return (0);
 }
 
@@ -104,15 +106,23 @@ tickaudio()
 {
   int16_t sample;
   if (audbufptr >= usebuffersize)
-    return;
+    {
+      return;
+    }
   sample = adlibgensample() >> 4;
   if (usessource)
-    sample += getssourcebyte();
+    {
+      sample += getssourcebyte();
+    }
   sample += getBlasterSample();
   if (speakerenabled)
-    sample += (speakergensample() >> 1);
+    {
+      sample += (speakergensample() >> 1);
+    }
   if (audbufptr < sizeof(audbuf))
-    audbuf[audbufptr++] = (uint8_t)((uint16_t)sample + 128);
+    {
+      audbuf[audbufptr++] = (uint8_t)((uint16_t)sample + 128);
+    }
 }
 
 extern uint64_t timinginterval;
@@ -125,7 +135,9 @@ fill_audio(void* udata, int8_t* stream, int len)
 
   audbufptr -= len;
   if (audbufptr < 0)
-    audbufptr = 0;
+    {
+      audbufptr = 0;
+    }
 }
 
 void
@@ -134,13 +146,21 @@ initaudio()
   printf("Initializing audio stream... ");
 
   if (usesamplerate < 4000)
-    usesamplerate = 4000;
+    {
+      usesamplerate = 4000;
+    }
   else if (usesamplerate > 96000)
-    usesamplerate = 96000;
+    {
+      usesamplerate = 96000;
+    }
   if (latency < 10)
-    latency = 10;
+    {
+      latency = 10;
+    }
   else if (latency > 1000)
-    latency = 1000;
+    {
+      latency = 1000;
+    }
   audbufptr = usebuffersize = (usesamplerate / 1000) * latency;
   gensamplerate = usesamplerate;
   doublesamplecount = (uint32_t)((double)usesamplerate * (double)0.01);
@@ -159,7 +179,7 @@ initaudio()
     }
   else
     {
-      printf("OK! (%lu Hz, %lu ms, %lu sample latency)\n", usesamplerate, latency, usebuffersize);
+      printf("OK! (%d Hz, %d ms, %d sample latency)\n", usesamplerate, latency, usebuffersize);
     }
 
   memset(audbuf, 128, sizeof(audbuf));
@@ -175,7 +195,9 @@ killaudio()
   SDL_PauseAudio(1);
 
   if (wav_file == NULL)
-    return;
+    {
+      return;
+    }
   wav_hdr.ChunkSize = wav_hdr.Subchunk2Size + sizeof(wav_hdr) - 8;
   fseek(wav_file, 0, SEEK_SET);
   fwrite((void*)&wav_hdr, 1, sizeof(wav_hdr), wav_file);

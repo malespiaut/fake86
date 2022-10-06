@@ -149,13 +149,21 @@ read86(uint32_t addr32)
   if ((addr32 >= 0xA0000) && (addr32 <= 0xBFFFF))
     {
       if ((vidmode == 0xD) || (vidmode == 0xE) || (vidmode == 0x10) || (vidmode == 0x12))
-        return (readVGA(addr32 - 0xA0000));
+        {
+          return (readVGA(addr32 - 0xA0000));
+        }
       if ((vidmode != 0x13) && (vidmode != 0x12) && (vidmode != 0xD))
-        return (RAM[addr32]);
+        {
+          return (RAM[addr32]);
+        }
       if ((VGA_SC[4] & 6) == 0)
-        return (RAM[addr32]);
+        {
+          return (RAM[addr32]);
+        }
       else
-        return (readVGA(addr32 - 0xA0000));
+        {
+          return (readVGA(addr32 - 0xA0000));
+        }
     }
 
   if (!didbootstrap)
@@ -821,12 +829,18 @@ op_grp2_8(uint8_t cnt)
         {
           // of = cf ^ ( (s >> 7) & 1);
           if ((s & 0x80) && cf)
-            of = 1;
+            {
+              of = 1;
+            }
           else
-            of = 0;
+            {
+              of = 0;
+            }
         }
       else
-        of = 0;
+        {
+          of = 0;
+        }
       break;
 
     case 1: /* ROR r/m8 */
@@ -1455,7 +1469,9 @@ intcall86(uint8_t intnum)
   didintr = 1;
 
   if (intnum == 0x19)
-    didbootstrap = 1;
+    {
+      didbootstrap = 1;
+    }
 
   switch (intnum)
     {
@@ -1470,9 +1486,13 @@ intcall86(uint8_t intnum)
           vidinterrupt();
           regs.wordregs[regax] = oldregax;
           if (regs.byteregs[regah] == 0x10)
-            return;
+            {
+              return;
+            }
           if (vidmode == 9)
-            return;
+            {
+              return;
+            }
         }
       if ((regs.byteregs[regah] == 0x1A) && (lastint10ax != 0x0100))
         { // the 0x0100 is a cheap hack to make it not do this if DOS EDIT/QBASIC
@@ -1573,7 +1593,9 @@ exec86(uint32_t execloops)
     {
 
       if ((totalexec & TIMING_INTERVAL) == 0)
-        timing();
+        {
+          timing();
+        }
 
       if (trap_toggle)
         {
@@ -1596,7 +1618,9 @@ exec86(uint32_t execloops)
         }
 
       if (hltstate)
-        goto skipexecution;
+        {
+          goto skipexecution;
+        }
 
       /*if ((((uint32_t)segregs[regcs] << 4) + (uint32_t)ip) == 0xFEC59) {
           //printf("Entered F000:EC59, returning to ");
@@ -1614,7 +1638,9 @@ exec86(uint32_t execloops)
       firstip = ip;
 
       if ((segregs[regcs] == 0xF000) && (ip == 0xE066))
-        didbootstrap = 0; // detect if we hit the BIOS entry point to clear didbootstrap because we've rebooted
+        {
+          didbootstrap = 0; // detect if we hit the BIOS entry point to clear didbootstrap because we've rebooted
+        }
 
       while (!docontinue)
         {

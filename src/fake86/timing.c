@@ -71,9 +71,13 @@ inittiming()
   ssourceticks = hostfreq / 8000;
   adlibticks = hostfreq / 48000;
   if (doaudio)
-    sampleticks = hostfreq / gensamplerate;
+    {
+      sampleticks = hostfreq / gensamplerate;
+    }
   else
-    sampleticks = -1;
+    {
+      sampleticks = -1;
+    }
   i8253tickgap = hostfreq / 119318;
 }
 
@@ -94,11 +98,17 @@ timing()
     {
       curscanline = (curscanline + 1) % 525;
       if (curscanline > 479)
-        port3da = 8;
+        {
+          port3da = 8;
+        }
       else
-        port3da = 0;
+        {
+          port3da = 0;
+        }
       if (curscanline & 1)
-        port3da |= 1;
+        {
+          port3da |= 1;
+        }
       pit0counter++;
       lastscanlinetick = curtick;
     }
@@ -119,7 +129,9 @@ timing()
           if (i8253.active[i8253chan])
             {
               if (i8253.counter[i8253chan] < 10)
-                i8253.counter[i8253chan] = i8253.chandata[i8253chan];
+                {
+                  i8253.counter[i8253chan] = i8253.chandata[i8253chan];
+                }
               i8253.counter[i8253chan] -= 10;
             }
         }

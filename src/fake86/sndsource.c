@@ -47,7 +47,9 @@ tickssource()
     }
   ssourcecursample = ssourcebuf[0];
   for (rotatefifo = 1; rotatefifo < 16; rotatefifo++)
-    ssourcebuf[rotatefifo - 1] = ssourcebuf[rotatefifo];
+    {
+      ssourcebuf[rotatefifo - 1] = ssourcebuf[rotatefifo];
+    }
   ssourceptr--;
   portram[0x379] = 0;
 }
@@ -56,19 +58,27 @@ void
 putssourcebyte(uint8_t value)
 {
   if (ssourceptr == 16)
-    return;
+    {
+      return;
+    }
   ssourcebuf[ssourceptr++] = value;
   if (ssourceptr == 16)
-    portram[0x379] = 0x40;
+    {
+      portram[0x379] = 0x40;
+    }
 }
 
 uint8_t
 ssourcefull()
 {
   if (ssourceptr == 16)
-    return (0x40);
+    {
+      return (0x40);
+    }
   else
-    return (0x00);
+    {
+      return (0x00);
+    }
 }
 
 void
@@ -82,7 +92,9 @@ outsoundsource(uint16_t portnum, uint8_t value)
       break;
     case 0x37A:
       if ((value & 4) && !(last37a & 4))
-        putssourcebyte(portram[0x378]);
+        {
+          putssourcebyte(portram[0x378]);
+        }
       last37a = value;
       break;
     }

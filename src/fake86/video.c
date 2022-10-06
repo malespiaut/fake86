@@ -153,9 +153,13 @@ vidinterrupt()
               RAM[tempcalc + 1] = blankattr;
             }
           if (regs.byteregs[regal] == 4)
-            portram[0x3D9] = 48;
+            {
+              portram[0x3D9] = 48;
+            }
           else
-            portram[0x3D9] = 0;
+            {
+              portram[0x3D9] = 0;
+            }
           break;
         case 6:
           videobase = textbase;
@@ -191,11 +195,13 @@ vidinterrupt()
           vidgfxmode = 1;
           blankattr = 0;
           if ((regs.byteregs[regal] & 0x80) == 0)
-            for (tempcalc = videobase; tempcalc < videobase + 65535; tempcalc += 2)
-              {
-                RAM[tempcalc] = 0;
-                RAM[tempcalc + 1] = blankattr;
-              }
+            {
+              for (tempcalc = videobase; tempcalc < videobase + 65535; tempcalc += 2)
+                {
+                  RAM[tempcalc] = 0;
+                  RAM[tempcalc + 1] = blankattr;
+                }
+            }
           portram[0x3D8] = portram[0x3D8] & 0xFE;
           break;
         case 0xD:  // 320x200 16-color
@@ -582,9 +588,13 @@ outVGA(uint16_t portnum, uint8_t value)
           regs.byteregs[regal] = oldal;
         }
       if (value & 0x80)
-        videobase = 0xB8000;
+        {
+          videobase = 0xB8000;
+        }
       else
-        videobase = 0xB0000;
+        {
+          videobase = 0xB0000;
+        }
       break;
     case 0x3C0:
       VGA_ATTR[portram[0x3C0]] = value & 255;
@@ -649,9 +659,13 @@ outVGA(uint16_t portnum, uint8_t value)
     case 0x3D5: // cursor position latch
       VGA_CRTC[portram[0x3D4]] = value & 255;
       if (portram[0x3D4] == 0xE)
-        cursorposition = (cursorposition & 0xFF) | (value << 8);
+        {
+          cursorposition = (cursorposition & 0xFF) | (value << 8);
+        }
       else if (portram[0x3D4] == 0xF)
-        cursorposition = (cursorposition & 0xFF00) | value;
+        {
+          cursorposition = (cursorposition & 0xFF00) | value;
+        }
       cursy = cursorposition / cols;
       cursx = cursorposition % cols;
       if (portram[0x3D4] == 6)
@@ -751,12 +765,20 @@ writeVGA(uint32_t addr32, uint8_t value)
       if (VGA_SC[2] & 1)
         {
           if (VGA_GC[1] & 1)
-            if (VGA_GC[0] & 1)
-              curval = 255;
-            else
-              curval = 0;
+            {
+              if (VGA_GC[0] & 1)
+                {
+                  curval = 255;
+                }
+              else
+                {
+                  curval = 0;
+                }
+            }
           else
-            curval = value;
+            {
+              curval = value;
+            }
           logicVGA(curval, VGA_latch[0]);
           curval = (~VGA_GC[8] & curval) | (VGA_GC[8] & VGA_latch[0]);
           VRAM[addr32] = curval;
@@ -764,12 +786,20 @@ writeVGA(uint32_t addr32, uint8_t value)
       if (VGA_SC[2] & 2)
         {
           if (VGA_GC[1] & 2)
-            if (VGA_GC[0] & 2)
-              curval = 255;
-            else
-              curval = 0;
+            {
+              if (VGA_GC[0] & 2)
+                {
+                  curval = 255;
+                }
+              else
+                {
+                  curval = 0;
+                }
+            }
           else
-            curval = value;
+            {
+              curval = value;
+            }
           logicVGA(curval, VGA_latch[1]);
           curval = (~VGA_GC[8] & curval) | (VGA_GC[8] & VGA_latch[1]);
           VRAM[addr32 + planesize] = curval;
@@ -777,12 +807,20 @@ writeVGA(uint32_t addr32, uint8_t value)
       if (VGA_SC[2] & 4)
         {
           if (VGA_GC[1] & 4)
-            if (VGA_GC[0] & 4)
-              curval = 255;
-            else
-              curval = 0;
+            {
+              if (VGA_GC[0] & 4)
+                {
+                  curval = 255;
+                }
+              else
+                {
+                  curval = 0;
+                }
+            }
           else
-            curval = value;
+            {
+              curval = value;
+            }
           logicVGA(curval, VGA_latch[2]);
           curval = (~VGA_GC[8] & curval) | (VGA_GC[8] & VGA_latch[2]);
           VRAM[addr32 + planesize * 2] = curval;
@@ -790,12 +828,20 @@ writeVGA(uint32_t addr32, uint8_t value)
       if (VGA_SC[2] & 8)
         {
           if (VGA_GC[1] & 8)
-            if (VGA_GC[0] & 8)
-              curval = 255;
-            else
-              curval = 0;
+            {
+              if (VGA_GC[0] & 8)
+                {
+                  curval = 255;
+                }
+              else
+                {
+                  curval = 0;
+                }
+            }
           else
-            curval = value;
+            {
+              curval = value;
+            }
           logicVGA(curval, VGA_latch[3]);
           curval = (~VGA_GC[8] & curval) | (VGA_GC[8] & VGA_latch[3]);
           VRAM[addr32 + planesize * 3] = curval;
@@ -803,24 +849,40 @@ writeVGA(uint32_t addr32, uint8_t value)
       break;
     case 1:
       if (VGA_SC[2] & 1)
-        VRAM[addr32] = VGA_latch[0];
+        {
+          VRAM[addr32] = VGA_latch[0];
+        }
       if (VGA_SC[2] & 2)
-        VRAM[addr32 + planesize] = VGA_latch[1];
+        {
+          VRAM[addr32 + planesize] = VGA_latch[1];
+        }
       if (VGA_SC[2] & 4)
-        VRAM[addr32 + planesize * 2] = VGA_latch[2];
+        {
+          VRAM[addr32 + planesize * 2] = VGA_latch[2];
+        }
       if (VGA_SC[2] & 8)
-        VRAM[addr32 + planesize * 3] = VGA_latch[3];
+        {
+          VRAM[addr32 + planesize * 3] = VGA_latch[3];
+        }
       break;
     case 2:
       if (VGA_SC[2] & 1)
         {
           if (VGA_GC[1] & 1)
-            if (value & 1)
-              curval = 255;
-            else
-              curval = 0;
+            {
+              if (value & 1)
+                {
+                  curval = 255;
+                }
+              else
+                {
+                  curval = 0;
+                }
+            }
           else
-            curval = value;
+            {
+              curval = value;
+            }
           logicVGA(curval, VGA_latch[0]);
           curval = (~VGA_GC[8] & curval) | (VGA_GC[8] & VGA_latch[0]);
           VRAM[addr32] = curval;
@@ -828,12 +890,20 @@ writeVGA(uint32_t addr32, uint8_t value)
       if (VGA_SC[2] & 2)
         {
           if (VGA_GC[1] & 2)
-            if (value & 2)
-              curval = 255;
-            else
-              curval = 0;
+            {
+              if (value & 2)
+                {
+                  curval = 255;
+                }
+              else
+                {
+                  curval = 0;
+                }
+            }
           else
-            curval = value;
+            {
+              curval = value;
+            }
           logicVGA(curval, VGA_latch[1]);
           curval = (~VGA_GC[8] & curval) | (VGA_GC[8] & VGA_latch[1]);
           VRAM[addr32 + planesize] = curval;
@@ -841,12 +911,20 @@ writeVGA(uint32_t addr32, uint8_t value)
       if (VGA_SC[2] & 4)
         {
           if (VGA_GC[1] & 4)
-            if (value & 4)
-              curval = 255;
-            else
-              curval = 0;
+            {
+              if (value & 4)
+                {
+                  curval = 255;
+                }
+              else
+                {
+                  curval = 0;
+                }
+            }
           else
-            curval = value;
+            {
+              curval = value;
+            }
           logicVGA(curval, VGA_latch[2]);
           curval = (~VGA_GC[8] & curval) | (VGA_GC[8] & VGA_latch[2]);
           VRAM[addr32 + planesize * 2] = curval;
@@ -854,12 +932,20 @@ writeVGA(uint32_t addr32, uint8_t value)
       if (VGA_SC[2] & 8)
         {
           if (VGA_GC[1] & 8)
-            if (value & 8)
-              curval = 255;
-            else
-              curval = 0;
+            {
+              if (value & 8)
+                {
+                  curval = 255;
+                }
+              else
+                {
+                  curval = 0;
+                }
+            }
           else
-            curval = value;
+            {
+              curval = value;
+            }
           logicVGA(curval, VGA_latch[3]);
           curval = (~VGA_GC[8] & curval) | (VGA_GC[8] & VGA_latch[3]);
           VRAM[addr32 + planesize * 3] = curval;
@@ -871,9 +957,13 @@ writeVGA(uint32_t addr32, uint8_t value)
       if (VGA_SC[2] & 1)
         {
           if (VGA_GC[0] & 1)
-            curval = 255;
+            {
+              curval = 255;
+            }
           else
-            curval = 0;
+            {
+              curval = 0;
+            }
           // logicVGA (curval, VGA_latch[0]);
           curval = (~tempand & curval) | (tempand & VGA_latch[0]);
           VRAM[addr32] = curval;
@@ -881,9 +971,13 @@ writeVGA(uint32_t addr32, uint8_t value)
       if (VGA_SC[2] & 2)
         {
           if (VGA_GC[0] & 2)
-            curval = 255;
+            {
+              curval = 255;
+            }
           else
-            curval = 0;
+            {
+              curval = 0;
+            }
           // logicVGA (curval, VGA_latch[1]);
           curval = (~tempand & curval) | (tempand & VGA_latch[1]);
           VRAM[addr32 + planesize] = curval;
@@ -891,9 +985,13 @@ writeVGA(uint32_t addr32, uint8_t value)
       if (VGA_SC[2] & 4)
         {
           if (VGA_GC[0] & 4)
-            curval = 255;
+            {
+              curval = 255;
+            }
           else
-            curval = 0;
+            {
+              curval = 0;
+            }
           // logicVGA (curval, VGA_latch[2]);
           curval = (~tempand & curval) | (tempand & VGA_latch[2]);
           VRAM[addr32 + planesize * 2] = curval;
@@ -901,9 +999,13 @@ writeVGA(uint32_t addr32, uint8_t value)
       if (VGA_SC[2] & 8)
         {
           if (VGA_GC[0] & 8)
-            curval = 255;
+            {
+              curval = 255;
+            }
           else
-            curval = 0;
+            {
+              curval = 0;
+            }
           // logicVGA (curval, VGA_latch[3]);
           curval = (~tempand & curval) | (tempand & VGA_latch[3]);
           VRAM[addr32 + planesize * 3] = curval;
@@ -925,13 +1027,21 @@ readVGA(uint32_t addr32)
   VGA_latch[2] = VRAM[addr32 + planesize * 2];
   VGA_latch[3] = VRAM[addr32 + planesize * 3];
   if (VGA_SC[2] & 1)
-    return (VRAM[addr32]);
+    {
+      return (VRAM[addr32]);
+    }
   if (VGA_SC[2] & 2)
-    return (VRAM[addr32 + planesize]);
+    {
+      return (VRAM[addr32 + planesize]);
+    }
   if (VGA_SC[2] & 4)
-    return (VRAM[addr32 + planesize * 2]);
+    {
+      return (VRAM[addr32 + planesize * 2]);
+    }
   if (VGA_SC[2] & 8)
-    return (VRAM[addr32 + planesize * 3]);
+    {
+      return (VRAM[addr32 + planesize * 3]);
+    }
   return (0); // this won't be reached, but without it some compilers give a warning
 }
 
