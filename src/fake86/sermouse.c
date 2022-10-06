@@ -86,12 +86,7 @@ insermouse(uint16_t portnum)
       sermouse.reg[4] = ~sermouse.reg[4] & 1;
       return (temp);
     case 5: // line status register (read-only)
-      if (sermouse.bufptr > 0)
-        temp = 1;
-      else
-        temp = 0;
       return (0x1);
-      return (0x60 | temp);
     }
   return (sermouse.reg[portnum & 7]);
 }
