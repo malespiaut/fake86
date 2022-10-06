@@ -567,7 +567,6 @@ void
 outVGA(uint16_t portnum, uint8_t value)
 {
   static uint8_t oldah, oldal;
-  uint8_t flip3c0 = 0;
   updatedscreen = 1;
   switch (portnum)
     {
@@ -588,18 +587,8 @@ outVGA(uint16_t portnum, uint8_t value)
         videobase = 0xB0000;
       break;
     case 0x3C0:
-      if (flip3c0)
-        {
-          flip3c0 = 0;
-          portram[0x3C0] = value & 255;
-          return;
-        }
-      else
-        {
-          flip3c0 = 1;
-          VGA_ATTR[portram[0x3C0]] = value & 255;
-          return;
-        }
+      VGA_ATTR[portram[0x3C0]] = value & 255;
+      return;
     case 0x3C4: // sequence controller index
       portram[0x3C4] = value & 255;
       // if (portout16) VGA_SC[value & 255] = value >> 8;
