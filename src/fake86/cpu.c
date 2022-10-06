@@ -796,7 +796,6 @@ op_grp2_8(uint8_t cnt)
   uint16_t msb;
 
   s = oper1b;
-  oldcf = cf;
 #ifdef CPU_LIMIT_SHIFT_COUNT
   cnt &= 0x1F;
 #endif
