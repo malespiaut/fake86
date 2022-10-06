@@ -308,7 +308,7 @@ main(int argc, char* argv[])
 #endif
   if (biossize <= 8192)
     {
-      loadrom(0xF6000UL, PATH_DATAFILES "rombasic.bin", 0);
+      loadrom(0xF6000UL, PATH_DATAFILES "ibm-basic-1.10.rom", 0);
       if (!loadrom(0xC0000UL, PATH_DATAFILES "videorom.bin", 1))
         {
           return (-1);
