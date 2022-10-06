@@ -360,7 +360,7 @@ void
 doubleblit(SDL_Surface* target)
 {
   uint32_t srcx, srcy, dstx, dsty, curcolor;
-  int32_t ofs;
+  int32_t ofs = 0;
   uint8_t* pixelrgb;
 
   if (SDL_MUSTLOCK(target))
