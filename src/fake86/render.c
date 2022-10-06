@@ -360,7 +360,7 @@ void
 doubleblit(SDL_Surface* target)
 {
   uint32_t srcx, srcy, dstx, dsty, curcolor;
-  int32_t ofs, startofs;
+  int32_t ofs;
   uint8_t* pixelrgb;
 
   if (SDL_MUSTLOCK(target))
@@ -370,7 +370,6 @@ doubleblit(SDL_Surface* target)
   for (dsty = 0; dsty < (uint32_t)target->h; dsty += 2)
     {
       srcy = (uint32_t)(dsty >> 1);
-      startofs = ofs = dsty * target->w;
       for (dstx = 0; dstx < (uint32_t)target->w; dstx += 2)
         {
           srcx = (uint32_t)(dstx >> 1);
@@ -392,7 +391,7 @@ extern uint16_t vtotal;
 void
 draw()
 {
-  uint32_t planemode, vgapage, color, chary, charx, vidptr, divx, divy, curchar, curpixel, usepal, intensity, blockw, curheight, x1, y1;
+  uint32_t planemode, color, chary, charx, vidptr, divx, divy, curchar, curpixel, usepal, intensity, blockw, curheight, x1, y1;
   switch (vidmode)
     {
     case 0:
@@ -531,7 +530,6 @@ draw()
           for (x = 0; x < 720; x++)
             {
               charx = x;
-              chary = y >> 1;
               vidptr = videobase + ((y & 3) << 13) + (y >> 2) * 90 + (x >> 3);
               curpixel = (RAM[vidptr] >> (7 - (charx & 7))) & 1;
 #ifdef __BIG_ENDIAN__
@@ -613,7 +611,6 @@ draw()
     case 0x12:
       nw = 640;
       nh = 480;
-      vgapage = ((uint32_t)VGA_CRTC[0xC] << 8) + (uint32_t)VGA_CRTC[0xD];
       for (y = 0; y < nh; y++)
         for (x = 0; x < nw; x++)
           {
