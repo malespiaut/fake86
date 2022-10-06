@@ -949,11 +949,9 @@ op_grp2_16(uint8_t cnt)
 
   uint32_t s;
   uint32_t shift;
-  uint32_t oldcf;
   uint32_t msb;
 
   s = oper1;
-  oldcf = cf;
 #ifdef CPU_LIMIT_SHIFT_COUNT
   cnt &= 0x1F;
 #endif
