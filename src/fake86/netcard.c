@@ -26,10 +26,11 @@
 #include "config.h"
 #ifdef NETWORKING_ENABLED
 #ifdef NETWORKING_OLDCARD
-#include "cpu.h"
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
+
+#include "cpu.h"
 
 extern uint8_t verbose;
 extern union _bytewordregs_ regs;

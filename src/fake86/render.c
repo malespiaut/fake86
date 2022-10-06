@@ -21,10 +21,12 @@
    it is a bit messy. i plan to rework much of this in the future. i am also
    going to add hardware accelerated scaling soon. */
 
-#include "mutex.h"
-#include <SDL/SDL.h>
 #include <stdint.h>
 #include <stdio.h>
+
+#include <SDL/SDL.h>
+
+#include "mutex.h"
 
 #ifdef _WIN32
 CRITICAL_SECTION screenmutex;

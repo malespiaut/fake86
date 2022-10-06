@@ -20,12 +20,13 @@
 /* i8237.c: functions to emulate the Intel 8237 DMA controller.
    the Sound Blaster emulation functions rely on this! */
 
-#include "i8237.h"
-#include "blaster.h"
-#include "config.h"
 #include <memory.h>
 #include <stdint.h>
 #include <stdio.h>
+
+#include "blaster.h"
+#include "config.h"
+#include "i8237.h"
 
 extern struct blaster_s blaster;
 

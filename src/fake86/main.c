@@ -20,15 +20,14 @@
 /* main.c: functions to initialize the different components of Fake86,
    load ROM binaries, and kickstart the CPU emulator. */
 
-#include "config.h"
-#ifdef __APPLE__     /* Memory leaks occur in OS X when the SDL window gets */
-#include <SDL/SDL.h> /* resized if SDL.h not included in file with main() */
-#endif
-#include "mutex.h"
 #include <memory.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
+
+#ifdef __APPLE__     /* Memory leaks occur in OS X when the SDL window gets */
+#include <SDL/SDL.h> /* resized if SDL.h not included in file with main() */
+#endif
 #ifdef _WIN32
 CRITICAL_SECTION screenmutex;
 #else
@@ -37,6 +36,9 @@ CRITICAL_SECTION screenmutex;
 #endif
 pthread_t consolethread;
 #endif
+
+#include "config.h"
+#include "mutex.h"
 
 const uint8_t* build = BUILD_STRING;
 

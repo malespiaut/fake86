@@ -1,5 +1,4 @@
-#ifndef __CONFIG_H__
-#define __CONFIG_H__
+#pragma once
 
 #define BUILD_STRING "Fake86 v0.13.10.2"
 
@@ -57,4 +56,3 @@
 //#define DEBUG_DMA
 
 //#define BENCHMARK_BIOS
-#endif

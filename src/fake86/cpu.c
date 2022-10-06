@@ -20,14 +20,15 @@
 /* cpu.c: functions to emulate the 8086/V20 CPU in software. the heart of Fake86. */
 
 #include "config.h"
+
 #ifndef CPU_INSTRUCTION_FLOW_CACHE
+#include <stdint.h>
+#include <stdio.h>
 
 #include "cpu.h"
 #include "i8253.h"
 #include "i8259.h"
 #include "modregrm.h"
-#include <stdint.h>
-#include <stdio.h>
 
 extern struct i8253_s i8253;
 

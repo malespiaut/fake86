@@ -21,11 +21,12 @@
    these are required for the timer interrupt and PC speaker to be
    properly emulated! */
 
-#include "i8253.h"
-#include "mutex.h"
 #include <memory.h>
 #include <stdint.h>
 #include <stdio.h>
+
+#include "i8253.h"
+#include "mutex.h"
 
 extern void set_port_write_redirector(uint16_t startport, uint16_t endport, void* callback);
 extern void set_port_read_redirector(uint16_t startport, uint16_t endport, void* callback);

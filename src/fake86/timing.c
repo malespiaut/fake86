@@ -20,10 +20,9 @@
 /* timing.c: critical functions to provide accurate timing for the
    system timer interrupt, and to generate new audio output samples. */
 
-#include "config.h"
-#include <SDL/SDL.h>
 #include <stdint.h>
 #include <stdio.h>
+
 #ifdef _WIN32
 #include <Windows.h>
 LARGE_INTEGER queryperf;
@@ -31,7 +30,11 @@ LARGE_INTEGER queryperf;
 #include <sys/time.h>
 struct timeval tv;
 #endif
+
+#include <SDL/SDL.h>
+
 #include "blaster.h"
+#include "config.h"
 #include "i8253.h"
 
 extern struct blaster_s blaster;

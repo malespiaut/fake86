@@ -21,9 +21,10 @@
    note: this is not a very complete 8259 implementation, but for the purposes
    of a PC, it's all we need. */
 
-#include "i8259.h"
 #include <stdint.h>
 #include <string.h>
+
+#include "i8259.h"
 
 struct structpic i8259;
 

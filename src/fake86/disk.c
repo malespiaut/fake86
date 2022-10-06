@@ -19,10 +19,11 @@
 
 /* disk.c: disk emulation routines for Fake86. works at the BIOS interrupt 13h level. */
 
-#include "disk.h"
-#include "cpu.h"
 #include <stdint.h>
 #include <stdio.h>
+
+#include "cpu.h"
+#include "disk.h"
 
 extern uint8_t RAM[0x100000], cf, hdcount;
 extern uint16_t segregs[4];

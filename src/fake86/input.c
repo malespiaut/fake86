@@ -20,9 +20,11 @@
 /* input.c: functions for translation of SDL scancodes to BIOS scancodes,
    and handling of SDL events in general. */
 
-#include "sermouse.h"
-#include <SDL/SDL.h>
 #include <stdint.h>
+
+#include <SDL/SDL.h>
+
+#include "sermouse.h"
 
 uint8_t keydown[0x100], keyboardwaitack = 0;
 extern uint32_t usegrabmode;

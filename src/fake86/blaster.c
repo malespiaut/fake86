@@ -19,11 +19,12 @@
 
 /* blaster.c: functions to emulate a Creative Labs Sound Blaster Pro. */
 
-#include "blaster.h"
-#include "config.h"
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
+
+#include "blaster.h"
+#include "config.h"
 
 extern void set_port_write_redirector(uint16_t startport, uint16_t endport, void* callback);
 extern void set_port_read_redirector(uint16_t startport, uint16_t endport, void* callback);

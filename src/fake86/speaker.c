@@ -19,10 +19,11 @@
 
 /* speaker.c: function to generate output samples for PC speaker emulation. */
 
+#include <stdint.h>
+
 #include "config.h"
 #include "i8253.h"
 #include "mutex.h"
-#include <stdint.h>
 
 extern struct i8253_s i8253;
 

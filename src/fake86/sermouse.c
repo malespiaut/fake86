@@ -19,11 +19,12 @@
 
 /* sermouse.c: functions to emulate a standard Microsoft-compatible serial mouse. */
 
-#include "sermouse.h"
-#include "config.h"
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
+
+#include "config.h"
+#include "sermouse.h"
 
 extern void set_port_write_redirector(uint16_t startport, uint16_t endport, void* callback);
 extern void set_port_read_redirector(uint16_t startport, uint16_t endport, void* callback);

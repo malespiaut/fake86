@@ -19,12 +19,14 @@
 
 /* parsecl.c: Fake86 command line parsing for runtime options. */
 
-#include "config.h"
-#include "disk.h"
-#include <SDL/SDL.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
+
+#include <SDL/SDL.h>
+
+#include "config.h"
+#include "disk.h"
 
 extern struct struct_drive disk[256];
 #ifndef _WIN32

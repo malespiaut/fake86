@@ -1,3 +1,7 @@
+#pragma once
+
+#include <stdint.h>
+
 #include "config.h"
 
 #ifdef CPU_ADDR_MODE_CACHE
