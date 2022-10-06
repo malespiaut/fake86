@@ -17,59 +17,56 @@
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-const char* build = "Imagegen v1.1";
+#define BUILD "Imagegen v1.1"
 
-int
-main(int argc, char* argv[])
+int32_t
+main(const int32_t argc, const char* argv[])
 {
-  FILE* image;
-  char* blank;
-  unsigned long i, size;
-
-  printf("%s (c)2010-2012 Mike Chambers\n", build);
-  printf("[Blank disk image generator for Fake86]\n\n");
+  printf("%s (c)2010-2012 Mike Chambers\n", BUILD);
+  puts("[Blank disk image generator for Fake86]\n\n");
 
   if (argc < 3)
     {
-      printf("Usage syntax:\n");
-      printf("    imagegen imagefile size\n\n");
-      printf("imagefile denotes the filename of the new disk image to create.\n");
-      printf("size denotes the size in megabytes that it should be.\n");
-      return (1);
+      puts("Usage syntax:\n");
+      puts("    imagegen imagefile size\n\n");
+      puts("imagefile denotes the filename of the new disk image to create.\n");
+      puts("size denotes the size in megabytes that it should be.\n");
+      return EXIT_FAILURE;
     }
 
-  size = atoi(argv[2]);
+  size_t size = atoi(argv[2]);
   if ((size > 503) || !size)
     {
-      printf("Invalid size specified! Valid range is 1 to 503 MB.\n");
-      return (1);
+      puts("Invalid size specified! Valid range is 1 to 503 MB.\n");
+      return EXIT_FAILURE;
     }
 
-  image = fopen(argv[1], "wb");
+  FILE* image = fopen(argv[1], "wb");
   if (!image)
     {
       printf("Unable to create new file: %s\n", argv[1]);
-      return (1);
+      return EXIT_FAILURE;
     }
 
-  blank = (void*)malloc(1048576);
+  char* blank = (void*)malloc(1048576);
   if (!blank)
     {
-      printf("Unable to allocate enough memory!\n");
-      return (1);
+      puts("Unable to allocate enough memory!\n");
+      return EXIT_FAILURE;
     }
 
   printf("Please wait, generating new image...\n");
 
-  for (i = 0; i < size; i++)
+  for (size_t i = 0; i < size; ++i)
     {
       fwrite(&blank[0], 1048576, 1, image);
       printf("\rWriting to file: %lu MB", i);
     }
 
-  printf(" complete.\n");
-  return (0);
+  puts(" complete.\n");
+  return EXIT_SUCCESS;
 }
