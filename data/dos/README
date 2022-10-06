@@ -1,0 +1,27 @@
+All Fake86 release version numbers are simply based on the date
+I released it, in this format: 0.year.month.day
+
+So just look for the most recent version based on that of course.
+All releases will include the standard source tarball (*.tar.gz)
+as well as a pre-compiled binary version for Win32. (*.zip)
+
+I may also throw a pre-compiled .deb for i386 and amd64 Debian
+and Ubuntu users for some versions.
+
+dos-boot.zip contains a single 1.44 MB floppy disk image that
+can be used by Fake86. It has MS-DOS 6.22, and a small subset of
+the tools from it that can used to partition, format, and make
+bootable a new blank hard drive image. (fdisk, format, sys, etc)
+
+There was room left on the disk, so I also included the old
+freeware game Jetpack from the early 1990's.
+
+After unzipping the disk image, you can boot it in Fake86 by
+using this command:
+
+fake86 -fd0 dos-boot.img
+
+
+fake86-packet-driver.zip includes a standard DOS packet driver
+that can be used inside Fake86 to use networked DOS applications
+if using Fake86 with network emulation support.
