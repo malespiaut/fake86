@@ -62,8 +62,7 @@ extern uint8_t updatedscreen;
 union _bytewordregs_ regs;
 
 uint8_t	portram[0x10000];
-uint8_t	running = 0, debugmode, showcsip, verbose, mouseemu, didbootstrap = 0;
-uint8_t	ethif;
+uint8_t	running = 0, debugmode, showcsip, mouseemu, didbootstrap = 0;
 
 extern uint8_t	vidmode;
 extern uint8_t verbose;
