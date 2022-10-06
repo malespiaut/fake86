@@ -68,5 +68,6 @@ main(const int32_t argc, const char* argv[])
     }
 
   puts(" complete.\n");
+  free(blank);
   return EXIT_SUCCESS;
 }
